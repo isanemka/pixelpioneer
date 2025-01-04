@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Lores-12:wght@400&display=swap');
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -31,6 +32,7 @@ body {
 }
 
 h1 {
+  font-family: 'Lores 12', sans-serif, weight 400;
   font-size: 3.2em;
   line-height: 1.1;
 }
