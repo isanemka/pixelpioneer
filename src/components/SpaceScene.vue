@@ -1,5 +1,8 @@
 <template>
   <div class="space-scene">
+    <div class="title-container">
+      <h1 class="title">Pixel<br>Pioneer</h1>
+    </div>
     <div class="stars"></div>
     <div class="rocket"></div>
   </div>
@@ -114,6 +117,49 @@ onBeforeUnmount(() => {
   height: 100vh;
   background: radial-gradient(circle, #5200aa, #111);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+}
+
+/* Title container for better responsiveness */
+.title-container {
+  margin-top: 20%;
+  max-width: 90%;
+  z-index: 4; /* Ensure it stays above other elements */
+}
+
+/* Title styling */
+.title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  color: white;
+  text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.8);
+  animation: floatTitle 3s ease-in-out infinite alternate;
+}
+
+/* Randomized floating animation */
+@keyframes floatTitle {
+  0% {
+    transform: translateX(2px) translateY(3px) rotate(-1deg);
+  }
+  20% {
+    transform: translateX(-3px) translateY(4px) rotate(1deg);
+  }
+  40% {
+    transform: translateX(4px) translateY(-2px) rotate(-2deg);
+  }
+  60% {
+    transform: translateX(-2px) translateY(3px) rotate(1deg);
+  }
+  80% {
+    transform: translateX(1px) translateY(-3px) rotate(-1deg);
+  }
+  100% {
+    transform: translateX(0px) translateY(0px) rotate(0deg);
+  }
 }
 
 /* Stars container */
