@@ -9,7 +9,7 @@
         Lorem, ipsum dolor sit amet consectetur adipisicing elit.<br>Sequi blanditiis quod praesentium consectetur voluptates corporis odio dolorum! Excepturi cumque tenetur optio?<br>Explicabo a quasi beatae nobis, odio modi voluptatibus eum!
       </p>
       <img
-        src="/public/rocket.png"
+        src="/public/rocket_with_stars.png"
         alt="Bild av mig"
         class="w-32 h-32 mx-auto mt-6 rounded-full shadow-lg"
       />
