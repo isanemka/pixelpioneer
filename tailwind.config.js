@@ -18,6 +18,10 @@ export default {
         fireYellow: "#ffa500", // Fire-orange
         starWhite: "#ffffff", // Stars color
         hoverIndigo: "#6366f1", // Hover effect color
+        limegreen: 'rgb(50, 205, 50)', // Lime green
+      },
+      boxShadow: {
+        limegreen: '0 0 10px rgb(50, 205, 50)', // Lime green box-shadow
       },
     },
   },
