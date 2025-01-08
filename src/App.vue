@@ -9,7 +9,7 @@ import SpaceScene from './components/SpaceScene.vue'
 </script>
 
 <template>
-  <div>
+  <div class="w-full max-w-[1400px] mx-auto">
     <Header />
     <SpaceScene />
     <About />

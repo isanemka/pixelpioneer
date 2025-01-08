@@ -1,22 +1,51 @@
 <template>
-  <section id="about" class="about-section">
-    <div class="terminal">
+  <section class="w-full bg-black font-vt323 px-6 py-12 text-left">
+    <div class="max-w-3xl mx-auto text-limegreen border-2 border-limegreen shadow-limegreen p-4">
       <!-- Typing text effect -->
-      <p><span class="prompt">> </span><span id="typing-text"></span><span class="cursor">█</span></p>
+      <p class="text-md md:text-lg leading-relaxed">
+        <span>> </span><span id="typing-text"></span><span class="cursor">█</span>
+      </p>
       
       <!-- Smooth transition to grades -->
-      <div v-if="showLoading" class="loading-text">Laddar betyg...</div>
+      <div v-if="showLoading" class="text-orange-400 text-center mx-5 animate-pulse">Laddar betyg...</div>
       
       <div v-if="showGrades" class="fade-in">
         <br />
-        <h3 class="grades-header">Slutbetyg:</h3>
-        <div class="grades">
-          <p v-for="(course, index) in courses" :key="index">
-            <span class="course">{{ course.name }}</span> - 
-            <span class="points">{{ course.points }}p</span> - 
-            <span class="grade">{{ course.grade }}</span> 
-            <span class="date">({{ course.date }})</span>
-          </p>
+        <h3 class="mt-5 text-xl text-orange-400 underline">Slutbetyg:</h3>
+        <div class="text-base leading-relaxed">
+          
+          <!-- Desktop view -->
+          <div class="hidden md:block">
+            <table class="w-full border-collapse border border-lime-400">
+              <thead>
+                <tr class="bg-limegreen text-black">
+                  <th class="border border-lime-400 p-2 text-left">Kurs</th>
+                  <th class="border border-lime-400 p-2">Poäng</th>
+                  <th class="border border-lime-400 p-2">Betyg</th>
+                  <th class="border border-lime-400 p-2">Datum</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(course, index) in courses" :key="index" class="border-b border-lime-400 hover:bg-gray-900">
+                  <td class="p-2">{{ course.name }}</td>
+                  <td class="p-2 text-center">{{ course.points }}p</td>
+                  <td class="p-2 text-center text-limegreen">{{ course.grade }}</td>
+                  <td class="p-2 text-center text-gray-400">{{ course.date }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Mobile view -->
+          <div class="md:hidden space-y-4">
+            <div v-for="(course, index) in courses" :key="index" class="border border-lime-400 p-1 rounded shadow-md bg-gray-900">
+              <h4 class="text-cyan-400 font-bold">{{ course.name }}</h4>
+              <p class="text-orange-400"><strong>Poäng:</strong> {{ course.points }}p</p>
+              <p class="text-limegreen"><strong>Betyg:</strong> {{ course.grade }}</p>
+              <p class="text-gray-400"><strong>Datum:</strong> {{ course.date }}</p>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -26,18 +55,22 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 
+
 const text = `
 INKOMMANDE MEDDELANDE…
 Avsändare: Anton Karlsson
 Status: Nyexaminerad Webbutvecklare
 Specialisering: Vue.js, TypeScript, Node.js
-Uppdrag: Att skapa moderna, responsiva och innovativa webbapplikationer.
+Uppdrag: Skapa moderna, responsiva och innovativa webbapplikationer.
 
 Efter en lång resa genom arbetslivet, där jag har drivit eget företag, arbetat som fibertekniker och varit arbetsledare, har jag nu äntligen landat där jag alltid egentligen velat vara – i kodens värld. 
+
 I juni 2024 tog jag min examen som webbutvecklare, och nu är jag redo att ta nästa steg.
+
+För att ge en bättre bild av min utbildning och de tekniker jag har arbetat med, följer här en sammanställning av kurserna och resultat:
 `;
 let index = 0;
-const showLoading = ref(false); // Controls the "Laddar betyg..." text
+const showLoading = ref(false); // Controls the "Loading" text
 const showGrades = ref(false); // Controls visibility of grades
 
 // Course grades data
@@ -56,73 +89,34 @@ const courses = ref([
 
 function typeEffect() {
   const typingElement = document.getElementById("typing-text");
-  if (!typingElement) return;
+  if (!typingElement || index >= text.length) return;
 
+  typingElement.innerHTML = text.substring(0, index).replace(/\n/g, "<br/>") + "<span class='cursor'></span>";
+  index++;
   if (index < text.length) {
-    typingElement.innerHTML = text.substring(0, index).replace(/\n/g, "<br/>") + "<span class='cursor'>█</span>";
-    index++;
-    setTimeout(typeEffect, 50);
+    setTimeout(typeEffect, 40);
   } else {
-    // After text is fully typed, show "Laddar betyg..." first
-    setTimeout(() => {
-      showLoading.value = true;
-    }, 1000);
+    showLoading.value = true;
 
-    // Then after another second, show the grades
-    setTimeout(() => {
-      showLoading.value = false;
+    setTimeout(() => { 
+      showLoading.value = false; 
       showGrades.value = true;
-    }, 2500);
+    }, 3500);
   }
 }
 
 onMounted(() => {
-  setTimeout(typeEffect, 500);
+  setTimeout(typeEffect, 1000);
 });
 </script>
 
 <style scoped>
-.about-section {
-  background: black;
-  color: limegreen;
-  font-family: 'VT323', monospace;
-  padding: 4rem;
-  text-align: left;
-}
-
-.terminal {
-  width: 80%;
-  max-width: 600px;
-  margin: auto;
-  border: 2px solid limegreen;
-  padding: 1rem;
-  box-shadow: 0 0 10px limegreen;
-}
-
-.prompt {
-  color: lime;
-}
-
 .cursor {
   animation: blink 0.7s infinite;
 }
 
 @keyframes blink {
   50% { opacity: 0; }
-}
-
-/* Loading text effect */
-.loading-text {
-  color: orange;
-  font-style: italic;
-  text-align: center;
-  margin-top: 10px;
-  animation: fadeBlink 1s infinite alternate;
-}
-
-@keyframes fadeBlink {
-  0% { opacity: 1; }
-  100% { opacity: 0.5; }
 }
 
 /* Fade-in effect for grades */
@@ -133,33 +127,5 @@ onMounted(() => {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-/* Grades section */
-.grades-header {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  text-decoration: underline;
-}
-
-.grades {
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-.course {
-  color: cyan;
-}
-
-.points {
-  color: orange;
-}
-
-.grade {
-  color: limegreen;
-}
-
-.date {
-  color: gray;
 }
 </style>

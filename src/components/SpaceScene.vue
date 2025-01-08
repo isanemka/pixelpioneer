@@ -51,60 +51,67 @@ function createStars() {
   }
 }
 
+let asteroidTimeoutId: number | null = null; // Store active timeout
+let isSpawningAsteroid = false; // Toggle asteroid spawning
+
 // Generates asteroids that move across the screen
-function createAsteroids() {
+function createAsteroid() {
+  if (isSpawningAsteroid) return; // Prevent multiple asteroid loops
+  isSpawningAsteroid = true;
+
   const scene = document.querySelector('.space-scene') as HTMLElement | null;
   if (!scene) {
     console.error("Asteroid container (.space-scene) not found!");
     return;
   }
 
-  const numberOfAsteroids = 0.1; // Number of asteroids
+  const containerWidth = scene.clientWidth;
+  const asteroid = document.createElement('div');
+  asteroid.classList.add('asteroid');
 
-  for (let i = 0; i < numberOfAsteroids; i++) {
-    const asteroid = document.createElement('div');
-    asteroid.classList.add('asteroid');
-
-    let top = Math.random() * -20; // Start offscreen
-    let left;
-    if (Math.random() < 0.5) {
-      // Generate a number between 0 and 30
-      left = Math.random() * 30;
-    } else {
-      // Generate a number between 70 and 100
-      left = 60 + Math.random() * 14;
-    } 
-
-    asteroid.style.top = `${top}vh`;
-    asteroid.style.left = `${left}vw`;
-
-    // Random size
-    const size = Math.random() * 30 + 20;
-    asteroid.style.width = `${size}px`;
-    asteroid.style.height = `${size}px`;
-
-    // Assign different speeds
-    const duration = Math.random() * 5 + 5; // Speed between 5-10s
-    asteroid.style.animation = `moveAsteroids ${duration}s linear infinite`;
-
-    scene.appendChild(asteroid);
-
-    // Remove asteroid once it moves offscreen
-    setTimeout(() => {
-      asteroid.remove();
-    }, duration * 1000);
+  let left;
+  if (Math.random() < 0.5) {
+    left = Math.random() * (containerWidth * 0.35);
+  } else {
+    left = containerWidth * 0.65 + Math.random() * (containerWidth * 0.10); // 85-100% (högerkant)
   }
+
+  asteroid.style.top = `-50px`; // Starta ovanför containern
+  asteroid.style.left = `${left}px`;
+
+  // Slumpmässig storlek
+  const size = Math.random() * 30 + 20;
+  asteroid.style.width = `${size}px`;
+  asteroid.style.height = `${size}px`;
+
+  // Slumpmässig hastighet (5-10s för att falla genom containern)
+  const duration = Math.random() * 5 + 5;
+  asteroid.style.animation = `moveAsteroids ${duration}s linear`;
+
+  scene.appendChild(asteroid);
+
+  // Ta bort asteroid när den lämnar containern
+  setTimeout(() => {
+    asteroid.remove();
+  }, duration * 1000);
+
+  // 🕒 Vänta slumpmässigt mellan 3 och 8 sekunder innan nästa asteroid spawnas
+  const nextSpawn = Math.random() * 5000 + 3000; // 3000 - 8000ms (3-8 sek)
+  asteroidTimeoutId = setTimeout(() => {
+    isSpawningAsteroid = false; // Reset flag after timeout
+    createAsteroid();
+  }, nextSpawn);
 }
 
 onMounted(() => {
   createStars();
   parallaxEffect();
-  createAsteroids();
-  setInterval(createAsteroids, 4000); 
+  createAsteroid(); // Starta asteroid-loop
   window.addEventListener('resize', createStars);
 });
 
 onBeforeUnmount(() => {
+  if (asteroidTimeoutId !== null) clearTimeout(asteroidTimeoutId); // Stoppa asteroid-loopen
   window.removeEventListener('resize', createStars);
 });
 </script>
@@ -192,7 +199,7 @@ onBeforeUnmount(() => {
 /* Asteroid styling */
 .asteroid {
   position: absolute;
-  background: url('/public/asteroid.png') no-repeat center;
+  background: url('/images/asteroid.png') no-repeat center;
   background-size: contain;
   z-index: 2;
   animation: moveAsteroids linear infinite, rotateAsteroids linear infinite;
@@ -218,7 +225,7 @@ onBeforeUnmount(() => {
   transform: translateX(-50%);
   width: 50px;
   height: 100px;
-  background: url('/public/rocket.png') no-repeat center;
+  background: url('/images/rocket.png') no-repeat center;
   background-size: contain;
   animation: flyRocket 3s ease-in-out infinite;
   z-index: 3;
