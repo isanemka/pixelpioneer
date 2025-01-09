@@ -13,6 +13,7 @@ export default {
       },
       colors: {
         primary: "#5200aa", // Purple (Background color in `space-scene`)
+        secondary: "#62C2E6", // Light blue (Background GitHubProjects section)
         darkbg: "#111", // Dark background color
         fireOrange: "#ff4500", // Fire-red
         fireYellow: "#ffa500", // Fire-orange
