@@ -2,9 +2,9 @@
 import Header from './components/Header.vue'
 import About from './components/About.vue'
 import GitHubProjects from './components/GitHubProjects.vue'
-import Projects from './components/Projects.vue'
 import Skills from './components/Skills.vue'
-import Contact from './components/Contact.vue'
+//import Projects from './components/Projects.vue'
+// import Contact from './components/Contact.vue'
 import Footer from './components/Footer.vue'
 import SpaceScene from './components/SpaceScene.vue'
 </script>
@@ -15,9 +15,11 @@ import SpaceScene from './components/SpaceScene.vue'
     <SpaceScene />
     <About />
     <GitHubProjects />
-    <Projects />
     <Skills />
-    <Contact />
+    <!--
+      <Projects /> 
+      <Contact />
+    -->
     <Footer />
   </div>
 </template>
