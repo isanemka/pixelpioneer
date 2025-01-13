@@ -25,6 +25,3 @@ dist-ssr
 
 # TypeScript build info
 tsconfig.tsbuildinfo
-
-# OpenAPI prompt
-src/config/assistantPrompt.ts
