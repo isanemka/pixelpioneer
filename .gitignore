@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
 
 # Editor directories and files
 .vscode/
@@ -21,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# TypeScript build info
+tsconfig.tsbuildinfo
+
+# OpenAPI prompt
+src/config/assistantPrompt.ts
