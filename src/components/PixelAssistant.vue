@@ -17,11 +17,11 @@
     <div
       v-else
       :class="[
-        'p-4 rounded-lg shadow-lg space-bg border-2 border-cyan-400 transition-all duration-300 flex flex-col max-w-[90vw] min-w-[280px]',
+        'p-4 rounded-lg shadow-lg space-bg border-2 border-cyan-400 transition-all duration-300 flex flex-col max-h-[80vh] overflow-y-auto max-w-[90vw] min-w-[280px]',
         expanded ? 'w-[28rem] h-[28rem]' : 'w-80 sm:w-72 md:w-80 lg:w-96'
       ]"
     >
-      <div class="flex justify-between items-center">
+      <div class="flex justify-between items-center pb-2">
         <h3 class="text-lg font-bold text-neon">Pixel Assistant</h3>
         <div class="flex gap-2">
           <!-- Expand button -->
