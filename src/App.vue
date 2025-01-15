@@ -8,6 +8,7 @@ import PixelAssistant from './components/PixelAssistant.vue'
 // import Contact from './components/Contact.vue'
 import Footer from './components/Footer.vue'
 import SpaceScene from './components/SpaceScene.vue'
+import CookieBanner from './components/CookieBanner.vue'
 </script>
 
 <template>
@@ -23,5 +24,6 @@ import SpaceScene from './components/SpaceScene.vue'
       <Contact />
     -->
     <Footer />
+    <CookieBanner />
   </div>
 </template>

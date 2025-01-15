@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import './style.css'
 import './assets/tailwind.css';
+import { inject } from '@vercel/analytics';
 
 // FontAwesome imports
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -14,3 +15,6 @@ library.add(faGithub, faLinkedin);
 const app = createApp(App);
 app.component('FontAwesomeIcon', FontAwesomeIcon);
 app.mount('#app');
+
+// Inject the analytics script
+inject();
