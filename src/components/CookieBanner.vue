@@ -1,13 +1,13 @@
 <template>
   <div v-if="showBanner" class="z-20 fixed bottom-0 left-0 w-full bg-gray-900 text-white p-4 flex flex-col md:flex-row justify-between items-center shadow-lg">
-    <p class="text-sm text-gray-300">
+    <p class="text-base text-gray-300">
       Vi använder cookies för att förbättra din upplevelse. Du kan godkänna eller avböja.
     </p>
     <div class="mt-2 md:mt-0 flex gap-2">
-      <button @click="declineCookies" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded">
+      <button @click="declineCookies" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded text-sm md:text-base">
         Avböj
       </button>
-      <button @click="acceptCookies" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+      <button @click="acceptCookies" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-sm md:text-base">
         Godkänn
       </button>
     </div>

@@ -26,7 +26,7 @@
       ]"
     >
       <div class="flex justify-between items-center pb-2">
-        <h3 class="text-lg font-bold text-neon">Pixel Assistant</h3>
+        <h3 class="text-xl md:text-2xl font-bold text-neon">Pixel Assistant</h3>
         <div class="flex gap-2">
           <!-- Expand button -->
           <button 
@@ -59,7 +59,7 @@
           v-for="(q, i) in suggestedQuestions"
           :key="i"
           @click="() => { userInput = q; sendMessage(); }"
-          class="bg-cyan-700 hover:bg-cyan-500 text-white px-3 py-1 rounded-lg text-sm transition-all"
+          class="bg-cyan-700 hover:bg-cyan-500 text-white px-3 py-1 rounded-lg text-base md:text-lg transition-all"
         >
           {{ q }}
         </button>
@@ -74,13 +74,13 @@
         >
           <p
             :class="msg.sender === 'bot' ? 'bot-msg' : 'user-msg'"
-            class="inline-block px-3 py-1 rounded-lg my-1"
+            class="inline-block px-3 py-1 rounded-lg my-1 text-base md:text-lg"
           >
             {{ msg.text }}
           </p>
         </div>
         <!-- Loading-indicator -->
-        <p v-if="loading" class="text-cyan-300 italic animate-pulse">Skriver...</p>
+        <p v-if="loading" class="text-cyan-300 italic animate-pulse text-base md:text-lg">Skriver...</p>
       </div>
 
       <!-- Input field and button -->
@@ -89,13 +89,13 @@
           v-model="userInput"
           @keyup.enter="sendMessage"
           :disabled="loading"
-          class="flex-grow p-2 rounded-l-lg bg-gray-800 neon-text disabled:opacity-50 min-w-0"
+          class="flex-grow p-2 rounded-l-lg bg-gray-800 neon-text disabled:opacity-50 min-w-0 text-base md:text-lg"
           placeholder="Fråga mig något..."
         />
         <button
           @click="sendMessage"
           :disabled="loading"
-          class="bg-indigo-600 px-4 py-2 rounded-r-lg disabled:opacity-50"
+          class="bg-indigo-600 px-4 py-2 rounded-r-lg disabled:opacity-50 text-base md:text-lg"
         >
           Skicka
         </button>

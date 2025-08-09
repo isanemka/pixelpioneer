@@ -13,7 +13,7 @@
       </div>
       
       <!-- Scrolling text effect -->
-      <div class="mt-4 text-center text-gray-600 text-sm">
+      <div class="mt-4 text-center text-gray-600 text-base md:text-lg">
       </div>
     </div>
   </section>
