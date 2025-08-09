@@ -13,27 +13,20 @@
         <component :is="Rocket" :size="48" class="text-yellow-400 mx-auto mb-4 animate-bounce" />
       </div>
       
-      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-limegreen">
-        Få offert inom 24 timmar
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 text-limegreen">
+        Få offert inom 48 timmar
       </h2>
-      <p class="text-xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed">
-        Kostnadsfri genomgång av din hemsida och en tydlig plan för fler kunder. Enkelt, rakt och utan bindningar.
+      <p class="text-2xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed">
+        Kostnadsfri genomgång av din befintliga hemsida och en tydlig plan för fler kunder. Enkelt, rakt och tydligt.
       </p>
       
       <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
         <a 
           href="#contact" 
-          class="group bg-gradient-to-r from-limegreen to-cyan-400 text-black px-8 md:px-10 py-4 rounded-lg font-bold hover:from-cyan-400 hover:to-limegreen transition-all duration-300 text-xl shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-cyan-500"
+          class="group bg-gradient-to-r from-limegreen to-cyan-400 text-black px-8 md:px-10 py-4 rounded-lg font-bold hover:from-cyan-400 hover:to-limegreen transition-all duration-300 text-2xl shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-cyan-500"
           aria-label="Öppna kontaktformuläret för att få offert"
         >
-          <span class="group-hover:animate-pulse">Få offert</span>
-        </a>
-        <a
-          href="tel:+46734644604"
-          class="text-limegreen underline hover:text-cyan-300 text-lg"
-          aria-label="Ring 0734-64 46 04"
-        >
-          eller ring 0734-64 46 04
+          <span class="group-hover:animate-pulse">Begär offert</span>
         </a>
       </div>
     </div>

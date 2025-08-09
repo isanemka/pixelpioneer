@@ -3,7 +3,7 @@
     <div class="max-w-4xl mx-auto text-limegreen border-2 border-limegreen shadow-limegreen p-4 rounded-md">
       <!-- Typing text effect (accessible) -->
       <p
-        class="text-md md:text-lg leading-relaxed"
+        class="text-lg md:text-xl leading-relaxed"
         role="status"
         aria-live="polite"
         :aria-busy="isTyping ? 'true' : 'false'"
@@ -19,13 +19,13 @@
         <button
           v-if="isTyping"
           @click="skipTyping"
-          class="text-xs md:text-sm text-black bg-limegreen/90 hover:bg-limegreen px-3 py-1 rounded transition"
+          class="text-sm md:text-base text-black bg-limegreen/90 hover:bg-limegreen px-3 py-1 rounded transition"
         >
           Visa hela texten
         </button>
         <a
           href="#contact"
-          class="text-xs md:text-sm underline text-cyan-300 hover:text-cyan-200"
+          class="text-sm md:text-base underline text-cyan-300 hover:text-cyan-200"
         >
           Få kostnadsfri offert
         </a>
@@ -33,8 +33,8 @@
 
       <!-- Services -->
       <div v-if="showServices" class="fade-in">
-        <h3 class="mt-8 text-xl md:text-2xl text-orange-400 underline">Tjänster</h3>
-        <p class="text-base md:text-lg text-gray-300 mt-2">
+        <h3 class="mt-8 text-2xl md:text-3xl text-orange-400 underline">Tjänster</h3>
+        <p class="text-lg md:text-xl text-gray-300 mt-2">
           Implementeringar som ger snabb effekt – allt kan kombineras och växa med ditt företag.
         </p>
 
@@ -45,9 +45,9 @@
             <div class="flex items-start gap-3">
               <component :is="svc.icon" class="text-cyan-300" :size="22" />
               <div>
-                <h4 class="text-cyan-400 text-lg">{{ svc.name }}</h4>
-                <p class="text-limegreen">{{ svc.value }}</p>
-                <p class="text-gray-400 text-sm mt-1">{{ svc.includes }}</p>
+                <h4 class="text-cyan-400 text-xl">{{ svc.name }}</h4>
+                <p class="text-limegreen text-base md:text-lg">{{ svc.value }}</p>
+                <p class="text-gray-400 text-base md:text-lg mt-1">{{ svc.includes }}</p>
               </div>
             </div>
           </article>

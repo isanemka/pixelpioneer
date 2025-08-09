@@ -3,8 +3,8 @@
     <div class="container mx-auto relative z-10">
 
       <!-- HEADLINE -->
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-limegreen">Så här jobbar jag – och vad du får</h2>
-      <p class="text-center text-gray-300 mb-16 max-w-3xl mx-auto px-4 text-lg">
+      <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 text-limegreen">Hur jag jobbar – och vad du får</h2>
+      <p class="text-center text-gray-300 mb-16 max-w-3xl mx-auto px-4 text-xl md:text-2xl">
         Tydlig process som ger snabb effekt och långsiktigt värde.
       </p>
 
@@ -24,12 +24,12 @@
                 class="text-limegreen"
               />
             </div>
-            <h3 class="text-xl font-bold mb-2 text-cyan-400">{{ approach.title }}</h3>
-            <p class="text-orange-400 text-sm mb-2">{{ approach.phase }}</p>
-            <p class="text-gray-300 mb-4 text-sm leading-relaxed">{{ approach.description }}</p>
+            <h3 class="text-3xl font-bold mb-2 text-cyan-400">{{ approach.title }}</h3>
+            <p class="text-orange-400 text-base mb-2">{{ approach.phase }}</p>
+            <p class="text-gray-300 mb-4 text-lg md:text-xl leading-relaxed">{{ approach.description }}</p>
             <div class="mb-4">
-              <h4 class="text-limegreen font-bold text-sm mb-2">LEVERERAR:</h4>
-              <ul class="text-xs text-gray-300 space-y-1">
+              <h4 class="text-limegreen font-bold text-base mb-2">LEVERERAR:</h4>
+              <ul class="text-lg md:text-xl text-gray-300 space-y-1">
                 <li v-for="deliverable in approach.deliverables" :key="deliverable" class="flex items-center">
                   <span class="text-limegreen mr-2">▶</span>{{ deliverable }}
                 </li>
@@ -41,8 +41,8 @@
 
       <!-- RESULTS & BENEFITS -->
       <div class="mb-20">
-        <h3 class="text-2xl md:text-3xl font-bold text-center mb-4 text-orange-400">Resultat du märker</h3>
-        <p class="text-center text-gray-300 mb-12 max-w-2xl mx-auto px-6">
+        <h3 class="text-3xl md:text-4xl font-bold text-center mb-4 text-orange-400">Resultat du märker</h3>
+        <p class="text-center text-gray-300 mb-12 max-w-2xl mx-auto px-6 text-xl md:text-2xl">
           Konkret effekt för din verksamhet: fler förfrågningar, tydligare budskap och smidigare upplevelse.
         </p>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6 max-w-6xl mx-auto">
@@ -55,10 +55,10 @@
                 class="text-limegreen"
               />
             </div>
-            <h3 class="text-xl lg:text-2xl text-cyan-400 font-vt323 mb-3">{{ benefit.title }}</h3>
-            <p class="text-gray-300 text-sm lg:text-base leading-relaxed mb-4">{{ benefit.description }}</p>
+            <h3 class="text-3xl text-cyan-400 font-vt323 mb-3">{{ benefit.title }}</h3>
+            <p class="text-gray-300 text-xl md:text-2xl leading-relaxed mb-4">{{ benefit.description }}</p>
             <div class="space-y-2">
-              <div v-for="feature in benefit.features" :key="feature" class="flex items-center text-xs lg:text-sm text-limegreen">
+              <div v-for="feature in benefit.features" :key="feature" class="flex items-center text-lg md:text-xl text-limegreen">
                 <span class="mr-2">▶</span>{{ feature }}
               </div>
             </div>
@@ -68,10 +68,10 @@
 
       <!-- TECHNICAL FOUNDATION -->
       <div class="text-center">
-        <h3 class="text-2xl font-vt323 text-orange-400 mb-6">MODERN & SÄKER GRUND</h3>
+        <h3 class="text-3xl font-vt323 text-orange-400 mb-6">MODERN & SÄKER GRUND</h3>
         <div class="max-w-4xl mx-auto px-6">
-          <p class="text-lg text-gray-300 mb-8 leading-relaxed">
-            Bygger med beprövad, modern teknik som garanterar säkerhet, hastighet och framtidssäkerhet för ditt företag.
+          <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+            Bygger med beprövad, modern teknik som garanterar säkerhet, hastighet och framtidssäkerhet för dig och ditt företag.
           </p>
           
           <!-- Benefit cards -->
@@ -80,24 +80,24 @@
               <div class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-700 border border-limegreen mb-3 mx-auto">
                 <component :is="Zap" :size="24" class="text-limegreen" />
               </div>
-              <h4 class="text-cyan-400 font-bold mb-2">Snabb & responsiv</h4>
-              <p class="text-gray-300 text-sm">Optimerad kod för alla enheter</p>
+              <h4 class="text-cyan-400 font-bold mb-2 text-lg">Snabb & responsiv</h4>
+              <p class="text-gray-300 text-base">Optimerad kod för alla enheter</p>
             </div>
             
             <div class="bg-gray-800 border border-cyan-400 rounded-lg p-4">
               <div class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-700 border border-limegreen mb-3 mx-auto">
                 <component :is="Shield" :size="24" class="text-limegreen" />
               </div>
-              <h4 class="text-cyan-400 font-bold mb-2">Säker & stabil</h4>
-              <p class="text-gray-300 text-sm">Moderna säkerhetslösningar och regelbundna uppdateringar</p>
+              <h4 class="text-cyan-400 font-bold mb-2 text-lg">Säker & stabil</h4>
+              <p class="text-gray-300 text-base">Moderna säkerhetslösningar och regelbundna uppdateringar</p>
             </div>
             
             <div class="bg-gray-800 border border-cyan-400 rounded-lg p-4">
               <div class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-700 border border-limegreen mb-3 mx-auto">
                 <component :is="TrendingUp" :size="24" class="text-limegreen" />
               </div>
-              <h4 class="text-cyan-400 font-bold mb-2">Framtidssäker</h4>
-              <p class="text-gray-300 text-sm">Skalbar arkitektur som växer med ditt företag</p>
+              <h4 class="text-cyan-400 font-bold mb-2 text-lg">Framtidssäker</h4>
+              <p class="text-gray-300 text-base">Skalbar arkitektur som växer med ditt företag</p>
             </div>
           </div>
         </div>

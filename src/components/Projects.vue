@@ -1,8 +1,8 @@
 <template>
   <section id="projects" class="relative bg-gradient-to-br from-black via-gray-900 to-black text-white py-16 font-vt323 overflow-hidden">
     <div class="container mx-auto px-6 relative z-10">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-limegreen">CASE</h2>
-      <p class="text-center text-gray-300 mb-12 max-w-3xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 text-limegreen">CASE</h2>
+      <p class="text-center text-gray-300 mb-12 max-w-3xl mx-auto text-lg md:text-xl">
         Ett utvalt kundcase som visar hur jag jobbar för resultat.
       </p>
 
@@ -14,21 +14,21 @@
         >
           <div class="flex items-center gap-3 mb-3">
             <component :is="c.icon" :size="28" class="text-limegreen" aria-hidden="true" />
-            <h3 class="text-xl text-cyan-400">{{ c.title }}</h3>
+            <h3 class="text-2xl text-cyan-400">{{ c.title }}</h3>
           </div>
-          <p class="text-sm text-orange-400 mb-2">{{ c.industry }}</p>
-          <p class="text-gray-300 text-sm leading-relaxed mb-4">{{ c.summary }}</p>
+          <p class="text-base text-orange-400 mb-2">{{ c.industry }}</p>
+          <p class="text-gray-300 text-base leading-relaxed mb-4">{{ c.summary }}</p>
 
           <div class="mb-4">
-            <h4 class="text-limegreen font-bold text-sm mb-2">RESULTAT</h4>
-            <ul class="text-xs text-gray-300 space-y-1">
+            <h4 class="text-limegreen font-bold text-base mb-2">RESULTAT</h4>
+            <ul class="text-sm md:text-base text-gray-300 space-y-1">
               <li v-for="r in c.results" :key="r" class="flex items-center">
                 <span class="text-limegreen mr-2">▶</span>{{ r }}
               </li>
             </ul>
           </div>
 
-          <div class="text-xs text-gray-400 mb-4">
+          <div class="text-sm md:text-base text-gray-400 mb-4">
             <span class="text-gray-500">Stack:</span> {{ c.stack }}
           </div>
 
@@ -38,7 +38,7 @@
               :href="c.link"
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 bg-cyan-400 text-black px-4 py-2 rounded font-bold hover:bg-limegreen transition-colors"
+              class="inline-flex items-center gap-2 bg-cyan-400 text-black px-4 py-2 rounded font-bold hover:bg-limegreen transition-colors text-base md:text-lg"
               :aria-label="`Besök webbplatsen för ${c.title}`"
             >
               Besök webbplats
@@ -49,7 +49,7 @@
       </div>
 
       <div class="text-center mt-10">
-        <a href="#contact" class="inline-block bg-limegreen text-black px-8 py-3 rounded font-bold hover:bg-cyan-400 transition-colors">
+        <a href="#contact" class="inline-block bg-limegreen text-black px-8 py-3 rounded font-bold hover:bg-cyan-400 transition-colors text-lg md:text-xl">
           Boka kostnadsfri konsultation
         </a>
       </div>
