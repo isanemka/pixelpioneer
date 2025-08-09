@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import Header from './components/Header.vue'
-import About from './components/About.vue'
-import GitHubProjects from './components/GitHubProjects.vue'
-import Skills from './components/Skills.vue'
-import PixelAssistant from './components/PixelAssistant.vue'
-// import Projects from './components/Projects.vue'
-// import Contact from './components/Contact.vue'
-import Footer from './components/Footer.vue'
 import SpaceScene from './components/SpaceScene.vue'
+import About from './components/About.vue'
+import CTA from './components/CTA.vue'
+import Separator from './components/Separator.vue'
+import Approach from './components/Approach.vue'
+// import PixelAssistant from './components/PixelAssistant.vue'
+import Contact from './components/Contact.vue'
 import CookieBanner from './components/CookieBanner.vue'
+import Footer from './components/Footer.vue'
+// import Projects from './components/Projects.vue'
 </script>
 
 <template>
@@ -16,13 +17,11 @@ import CookieBanner from './components/CookieBanner.vue'
     <Header />
     <SpaceScene />
     <About />
-    <GitHubProjects />
-    <Skills />
-    <PixelAssistant />
-    <!--
-      <Projects /> 
-      <Contact />
-    -->
+    <CTA />
+    <Separator />
+    <Approach />
+    <Separator />
+    <Contact />
     <Footer />
     <CookieBanner />
   </div>

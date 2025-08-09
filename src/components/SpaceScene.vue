@@ -5,13 +5,99 @@
     </div>
     <div class="stars"></div>
     <div class="rocket"></div>
+    <div class="mouse-trail" ref="mouseTrail"></div>
+    <div class="mouse-glow" ref="mouseGlow"></div>
+    <div class="custom-cursor" ref="customCursor">
+      <div class="cursor-center"></div>
+      <div class="cursor-ring"></div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from 'vue';
+import { onMounted, onBeforeUnmount, ref } from 'vue';
+
+const mouseTrail = ref<HTMLElement | null>(null);
+const mouseGlow = ref<HTMLElement | null>(null);
+const customCursor = ref<HTMLElement | null>(null);
 
 let stars: NodeListOf<Element>;
+let trailElements: HTMLElement[] = [];
+
+// Simple debounce for resize-heavy work
+function debounce<T extends (...args: any[]) => void>(fn: T, delay = 200) {
+  let t: number | undefined;
+  return (...args: Parameters<T>) => {
+    if (t) window.clearTimeout(t);
+    t = window.setTimeout(() => fn(...args), delay);
+  };
+}
+
+// Mouse trail effect
+function createMouseTrail(e: MouseEvent) {
+  // Only create trail if not hovering over text/interactive elements
+  if ((e.target as HTMLElement)?.closest('.title-container')) return;
+  
+  const trail = document.createElement('div');
+  trail.className = 'trail-particle';
+  
+  const rect = (e.currentTarget as HTMLElement)?.getBoundingClientRect();
+  if (!rect) return;
+  
+  trail.style.left = `${e.clientX - rect.left}px`;
+  trail.style.top = `${e.clientY - rect.top}px`;
+  
+  const colors = ['#00ff88', '#40ff99', '#60a5fa', '#fbbf24', '#ffffff'];
+  const randomColor = colors[Math.floor(Math.random() * colors.length)];
+  trail.style.background = randomColor;
+  trail.style.boxShadow = `0 0 20px ${randomColor}`;
+  
+  mouseTrail.value?.appendChild(trail);
+  trailElements.push(trail);
+  
+  // Remove trail after animation
+  setTimeout(() => {
+    if (trail.parentNode) {
+      trail.parentNode.removeChild(trail);
+    }
+    const index = trailElements.indexOf(trail);
+    if (index > -1) {
+      trailElements.splice(index, 1);
+    }
+  }, 1000);
+}
+
+// Mouse glow effect
+function updateMouseGlow(e: MouseEvent) {
+  if (!mouseGlow.value) return;
+  
+  const rect = (e.currentTarget as HTMLElement)?.getBoundingClientRect();
+  if (!rect) return;
+  
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  mouseGlow.value.style.left = `${x - 50}px`;
+  mouseGlow.value.style.top = `${y - 50}px`;
+  mouseGlow.value.style.opacity = '0.6';
+  
+  // Update custom cursor
+  if (customCursor.value) {
+    customCursor.value.style.left = `${x - 15}px`;
+    customCursor.value.style.top = `${y - 15}px`;
+    customCursor.value.style.opacity = '1';
+  }
+}
+
+// Hide glow when mouse leaves
+function hideMouseGlow() {
+  if (mouseGlow.value) {
+    mouseGlow.value.style.opacity = '0';
+  }
+  if (customCursor.value) {
+    customCursor.value.style.opacity = '0';
+  }
+}
 
 // Applies a parallax effect to the stars when scrolling
 function parallaxEffect() {
@@ -29,7 +115,7 @@ function createStars() {
   if (!starsContainer) return;
 
   starsContainer.innerHTML = ''; // Clear previous stars
-  const numberOfStars = 100;
+  const numberOfStars = window.innerWidth < 640 ? 60 : 100;
 
   for (let i = 0; i < numberOfStars; i++) {
     const star = document.createElement('div');
@@ -43,6 +129,12 @@ function createStars() {
     const size = Math.random() * 4 + 2; 
     star.style.width = `${size}px`;
     star.style.height = `${size}px`;
+
+    // Random colors for more visual interest
+    const colors = ['#ffffff', '#00ff88', '#40ff99', '#60a5fa', '#fbbf24'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    star.style.background = randomColor;
+    star.style.boxShadow = `0 0 ${size * 2}px ${randomColor}`;
 
     const duration = Math.random() * 5 + 5; 
     star.style.animation = `moveStars ${duration}s linear infinite`;
@@ -95,7 +187,7 @@ function createAsteroid() {
     asteroid.remove();
   }, duration * 1000);
 
-  // 🕒 Vänta slumpmässigt mellan 3 och 8 sekunder innan nästa asteroid spawnas
+  // ⏲ Vänta slumpmässigt mellan 3 och 8 sekunder innan nästa asteroid spawnas
   const nextSpawn = Math.random() * 5000 + 3000; // 3000 - 8000ms (3-8 sek)
   asteroidTimeoutId = setTimeout(() => {
     isSpawningAsteroid = false; // Reset flag after timeout
@@ -103,16 +195,51 @@ function createAsteroid() {
   }, nextSpawn);
 }
 
+const debouncedCreateStars = debounce(createStars, 200);
+
 onMounted(() => {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   createStars();
-  parallaxEffect();
-  createAsteroid(); // Starta asteroid-loop
-  window.addEventListener('resize', createStars);
+  // Optional subtle parallax (currently one-shot); skip if reduced motion
+  if (!prefersReducedMotion) {
+    parallaxEffect();
+  }
+  // Start asteroid loop only if user does not prefer reduced motion
+  if (!prefersReducedMotion) {
+    createAsteroid();
+  }
+  
+  // Add mouse event listeners
+  const spaceScene = document.querySelector('.space-scene') as HTMLElement;
+  if (spaceScene) {
+    spaceScene.addEventListener('mousemove', createMouseTrail);
+    spaceScene.addEventListener('mousemove', updateMouseGlow);
+    spaceScene.addEventListener('mouseleave', hideMouseGlow);
+  }
+  
+  window.addEventListener('resize', debouncedCreateStars);
 });
 
 onBeforeUnmount(() => {
   if (asteroidTimeoutId !== null) clearTimeout(asteroidTimeoutId); // Stoppa asteroid-loopen
-  window.removeEventListener('resize', createStars);
+  
+  // Remove mouse event listeners
+  const spaceScene = document.querySelector('.space-scene') as HTMLElement;
+  if (spaceScene) {
+    spaceScene.removeEventListener('mousemove', createMouseTrail);
+    spaceScene.removeEventListener('mousemove', updateMouseGlow);
+    spaceScene.removeEventListener('mouseleave', hideMouseGlow);
+  }
+  
+  // Clean up trail elements
+  trailElements.forEach(trail => {
+    if (trail.parentNode) {
+      trail.parentNode.removeChild(trail);
+    }
+  });
+  
+  window.removeEventListener('resize', debouncedCreateStars);
 });
 </script>
 
@@ -131,18 +258,150 @@ onBeforeUnmount(() => {
   text-align: center;
 }
 
+/* Show custom cursor on pointer devices; keep default on touch */
+@media (hover: hover) {
+  .space-scene { cursor: none; }
+  .space-scene a,
+  .space-scene button,
+  .space-scene .title-container { cursor: auto; }
+}
+
+/* Hide custom cursor/glow when hovering title to reduce distraction */
+.title-container:hover ~ .custom-cursor { opacity: 0 !important; }
+.title-container:hover ~ .mouse-glow { opacity: 0 !important; }
+
+/* Mouse trail container */
+.mouse-trail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Trail particles */
+.trail-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: fadeTrail 1s ease-out forwards;
+}
+
+@keyframes fadeTrail {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}
+
+/* Mouse glow effect */
+.mouse-glow {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 255, 136, 0.3) 0%, rgba(0, 255, 136, 0.1) 50%, transparent 100%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 5;
+  mix-blend-mode: screen;
+}
+
+/* Custom cursor */
+.custom-cursor {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.cursor-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 4px;
+  background: #00ff88;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #00ff88;
+}
+
+.cursor-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(0, 255, 136, 0.5);
+  border-radius: 50%;
+  animation: cursorPulse 2s ease-in-out infinite;
+}
+
+@keyframes cursorPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.8;
+  }
+}
+
 /* Title container for better responsiveness */
 .title-container {
   margin-top: 20%;
   max-width: 90%;
   z-index: 4; /* Ensure it stays above other elements */
+  pointer-events: none; /* Prevent mouse interference with custom cursor */
+}
+
+.title-container * {
+  pointer-events: auto;
 }
 
 /* Title styling */
 .title {
   font-size: clamp(1.5rem, 4vw, 3rem);
-  text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.8);
+  text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.8), 
+               0 0 20px rgba(0, 255, 136, 0.6),
+               0 0 40px rgba(0, 255, 136, 0.4);
   animation: floatTitle 3s ease-in-out infinite alternate;
+  margin-bottom: 1rem;
+}
+
+.tagline-text {
+  font-size: clamp(0.8rem, 2vw, 1.2rem);
+  color: #00ff88;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+  font-weight: bold;
+  letter-spacing: 2px;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  0% { 
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+    color: #00ff88;
+  }
+  100% { 
+    text-shadow: 0 0 20px rgba(0, 255, 136, 1), 0 0 30px rgba(0, 255, 136, 0.6);
+    color: #40ff99;
+  }
 }
 
 /* Randomized floating animation */
@@ -227,6 +486,7 @@ onBeforeUnmount(() => {
   background-size: contain;
   animation: flyRocket 3s ease-in-out infinite;
   z-index: 3;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.5));
 }
 
 /* Fire effect for the rocket */
@@ -267,5 +527,19 @@ onBeforeUnmount(() => {
   0% { transform: translateX(-50%) rotate(0deg); }
   50% { transform: translateX(-30%) rotate(2deg); }
   100% { transform: translateX(-50%) rotate(0deg); }
+}
+
+/* Reduced motion preference: tone down or remove animations */
+@media (prefers-reduced-motion: reduce) {
+  .mouse-trail,
+  .mouse-glow,
+  .custom-cursor { display: none !important; }
+
+  .star,
+  .asteroid,
+  .rocket,
+  .rocket::after,
+  .cursor-ring,
+  .title { animation: none !important; }
 }
 </style>

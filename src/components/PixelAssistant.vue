@@ -1,5 +1,9 @@
 <template>
-  <div class="z-10 fixed bottom-5 right-5 font-vt323">
+  <section id="assistant" class="relative">
+    <!-- Anchor point for navigation -->
+    <div class="absolute -top-20"></div>
+    
+    <div class="z-10 fixed bottom-5 right-5 font-vt323">
     <!-- Minimized button -->
     <button
       v-if="minimized"
@@ -50,6 +54,17 @@
         </div>
       </div>
 
+      <div v-if="messages.length === 1" class="mb-2 flex flex-wrap gap-2">
+        <button
+          v-for="(q, i) in suggestedQuestions"
+          :key="i"
+          @click="() => { userInput = q; sendMessage(); }"
+          class="bg-cyan-700 hover:bg-cyan-500 text-white px-3 py-1 rounded-lg text-sm transition-all"
+        >
+          {{ q }}
+        </button>
+      </div>
+
       <!-- Chat messages -->
       <div class="chat-box flex-grow overflow-y-auto p-2">
         <div
@@ -86,7 +101,8 @@
         </button>
       </div>
     </div>
-  </div>
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -96,7 +112,12 @@ import assistantPrompt from "../config/assistantPrompt";
 const minimized = ref(true);
 const expanded = ref(false);
 const messages = ref([
-  { text: "Hej! Vad vill du veta om Anton?", sender: "bot" },
+  { text: "Hej! 👋 Jag är Pixel Assistant. Vill du ha hjälp att synas bättre online eller få fler kunder till ditt företag?", sender: "bot" },
+]);
+const suggestedQuestions = ref([
+  "Hur kan jag få fler kunder via Google?",
+  "Vad behöver en bra hemsida innehålla?",
+  "Hur kommer jag igång med sociala medier för mitt företag?"
 ]);
 const userInput = ref("");
 const loading = ref(false);
@@ -124,7 +145,7 @@ const sendMessage = async () => {
         Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "gpt-4",
+        model: "gpt-4o",
         messages: [
           { role: "system", content: assistantPrompt },
           { role: "user", content: userInput.value },
