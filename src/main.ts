@@ -16,5 +16,19 @@ const app = createApp(App);
 app.component('FontAwesomeIcon', FontAwesomeIcon);
 app.mount('#app');
 
-// Inject the analytics script
-inject();
+// Inject analytics only after explicit consent
+function tryInjectAnalytics() {
+  try {
+    inject();
+  } catch (e) {
+    // no-op if unavailable
+  }
+}
+
+if (typeof window !== 'undefined') {
+  const consent = localStorage.getItem('cookiesAccepted');
+  if (consent === 'true') {
+    tryInjectAnalytics();
+  }
+  window.addEventListener('cookies:accepted', tryInjectAnalytics);
+}

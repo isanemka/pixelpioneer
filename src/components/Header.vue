@@ -10,10 +10,9 @@
         class="w-8 h-8 md:w-16 md:h-16 mt-1"
       />      
       <ul class="flex space-x-4 text-base md:text-2xl font-vt323">
-        <li><a href="#about" class="hover:text-indigo-400">Om mig</a></li>
-        <li><a href="#projects" class="hover:text-indigo-400">Projekt</a></li>
-        <li><a href="#skills" class="hover:text-indigo-400">Kompetenser</a></li>
-        <li><a href="#contact" class="hover:text-indigo-400">Kontakt</a></li>
+        <li><a href="#services" class="hover:text-indigo-400">Tjänster</a></li>
+        <li><a href="#approach" class="hover:text-indigo-400">Process & Fördelar</a></li>
+        <li><a href="#contact" class="hover:text-indigo-400">Få Offert</a></li>
       </ul>
     </nav>
   </header>
