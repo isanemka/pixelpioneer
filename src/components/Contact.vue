@@ -48,7 +48,7 @@
                 <span class="text-limegreen font-bold">KOSTNADSFRI KONSULTATION</span>
               </div>
               <p class="text-gray-300 text-base md:text-lg text-center">
-                Ring eller maila för en första samtal om ditt projekt - helt utan kostnad!
+                Ring eller maila för ett första samtal om ditt projekt - helt utan kostnad!
               </p>
             </div>
           </div>
