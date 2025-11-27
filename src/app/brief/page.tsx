@@ -391,7 +391,8 @@ export default function BriefPage() {
                 </div>
               </div>
             </div>
-          )}          {/* Step 3: Design style */}
+          )}
+          {/* Step 3: Design style */}
           {currentStep === 3 && (
             <div className="bg-gray-800/50 border border-limegreen/30 rounded-xl p-4 sm:p-5">
               <div className="flex items-center gap-2 mb-4">
