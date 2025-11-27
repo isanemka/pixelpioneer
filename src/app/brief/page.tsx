@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Send, CheckCircle, Rocket, Globe, Palette, Target } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Send, CheckCircle, Rocket, Globe, Palette, Target, AlertCircle } from "lucide-react";
 import Link from "next/link";
 
 interface FormData {
@@ -53,6 +53,8 @@ const initialFormData: FormData = {
   additionalInfo: "",
 };
 
+const STORAGE_KEY = "pixelpioneer-brief-form";
+
 const projectTypes = [
   "Företagssida",
   "Uppdatering av befintlig sida",
@@ -76,13 +78,41 @@ export default function BriefPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const totalSteps = 5;
+
+  // Load saved form data from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setFormData(parsed);
+      } catch {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    }
+  }, []);
+
+  // Save form data to localStorage on change
+  useEffect(() => {
+    if (formData !== initialFormData) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+    }
+  }, [formData]);
+
+  // Clear localStorage on successful submission
+  const clearSavedData = () => {
+    localStorage.removeItem(STORAGE_KEY);
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setValidationErrors([]);
   };
 
   const handleCheckboxChange = (field: "projectType" | "features", value: string) => {
@@ -92,27 +122,77 @@ export default function BriefPage() {
         ? prev[field].filter((item) => item !== value)
         : [...prev[field], value],
     }));
+    setValidationErrors([]);
+  };
+
+  // Validation for each step
+  const validateStep = (step: number): string[] => {
+    const errors: string[] = [];
+    
+    switch (step) {
+      case 1:
+        if (!formData.name.trim()) errors.push("Namn är obligatoriskt");
+        if (!formData.email.trim()) errors.push("E-post är obligatoriskt");
+        if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+          errors.push("Ange en giltig e-postadress");
+        }
+        break;
+      case 2:
+        if (!formData.description.trim()) errors.push("Projektbeskrivning är obligatoriskt");
+        break;
+      // Steps 3, 4, 5 have no required fields
+    }
+    
+    return errors;
+  };
+
+  // Check if form can be submitted (all required fields filled)
+  const canSubmit = (): boolean => {
+    return (
+      formData.name.trim() !== "" &&
+      formData.email.trim() !== "" &&
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) &&
+      formData.description.trim() !== ""
+    );
   };
 
   const handleSubmit = async () => {
+    if (!canSubmit()) {
+      setSubmitError("Vänligen fyll i alla obligatoriska fält (namn, e-post, projektbeskrivning)");
+      return;
+    }
+
     setIsSubmitting(true);
+    setSubmitError(null);
 
     // TODO: Implement AWS SES email sending
-    // For now, just simulate submission
     try {
       // API call will go here
       await new Promise((resolve) => setTimeout(resolve, 1000));
+      clearSavedData();
       setIsSubmitted(true);
     } catch (error) {
       console.error("Failed to send brief:", error);
-      // TODO: Show error message to user
+      setSubmitError("Något gick fel vid skickandet. Vänligen försök igen eller kontakta oss direkt på hej@pixelpioneer.se");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
-  const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
+  const nextStep = () => {
+    const errors = validateStep(currentStep);
+    if (errors.length > 0) {
+      setValidationErrors(errors);
+      return;
+    }
+    setValidationErrors([]);
+    setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
+  };
+  
+  const prevStep = () => {
+    setValidationErrors([]);
+    setCurrentStep((prev) => Math.max(prev - 1, 1));
+  };
 
   if (isSubmitted) {
     return (
@@ -175,6 +255,31 @@ export default function BriefPage() {
             />
           </div>
         </div>
+
+        {/* Validation errors */}
+        {validationErrors.length > 0 && (
+          <div className="bg-red-900/30 border border-red-500/50 rounded-lg p-4 flex items-start gap-3">
+            <AlertCircle className="text-red-400 shrink-0 mt-0.5" size={20} />
+            <div>
+              <p className="text-red-400 font-medium mb-1">Vänligen korrigera följande:</p>
+              <ul className="text-red-300 text-sm space-y-1">
+                {validationErrors.map((error, index) => (
+                  <li key={index}>• {error}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {/* Submit error */}
+        {submitError && (
+          <div className="bg-red-900/30 border border-red-500/50 rounded-lg p-4 flex items-start gap-3">
+            <AlertCircle className="text-red-400 shrink-0 mt-0.5" size={20} />
+            <div>
+              <p className="text-red-400 font-medium">{submitError}</p>
+            </div>
+          </div>
+        )}
 
         {/* Form */}
         <form onSubmit={(e) => e.preventDefault()} className="space-y-8">
@@ -525,8 +630,12 @@ export default function BriefPage() {
               <button
                 type="button"
                 onClick={handleSubmit}
-                disabled={isSubmitting}
-                className="bg-gradient-to-r from-limegreen to-cyan-400 text-black font-bold px-5 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg hover:from-cyan-400 hover:to-limegreen transition-all flex items-center gap-2 disabled:opacity-50"
+                disabled={isSubmitting || !canSubmit()}
+                className={`bg-gradient-to-r from-limegreen to-cyan-400 text-black font-bold px-5 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg transition-all flex items-center gap-2 ${
+                  isSubmitting || !canSubmit()
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:from-cyan-400 hover:to-limegreen"
+                }`}
               >
                 {isSubmitting ? (
                   "Skickar..."
