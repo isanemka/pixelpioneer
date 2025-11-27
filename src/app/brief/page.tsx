@@ -668,7 +668,7 @@ export default function BriefPage() {
 
         {/* Footer */}
         <p className="text-center text-gray-500 text-sm mt-8">
-          All information behandlas konfidentiellt och används endast för att ta fram en offert.
+          Genom att skicka formuläret samtycker du till att jag tar emot och sparar dina uppgifter för att ta fram en offert. All information behandlas endast av mig, inget kommer att delas med någon annan.
         </p>
       </div>
     </div>
