@@ -36,7 +36,7 @@ export default function CookieBanner() {
   return (
     <div className="z-20 fixed bottom-0 left-0 w-full bg-gray-900 text-white p-4 flex flex-col md:flex-row justify-between items-center shadow-lg">
       <p className="text-base text-gray-300">
-        Vi använder cookies för att förbättra din upplevelse. Du kan godkänna
+        Här används cookies för att förbättra din upplevelse. Du kan godkänna
         eller avböja.
       </p>
       <div className="mt-2 md:mt-0 flex gap-2">
