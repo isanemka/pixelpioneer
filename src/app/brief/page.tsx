@@ -14,24 +14,11 @@ interface FormData {
   // About the project
   projectType: string[];
   description: string;
-  goals: string;
-  targetAudience: string;
-  
-  // Design & content
-  hasLogo: string;
-  designStyle: string;
-  competitors: string;
-  inspirationSites: string;
-  
-  // Features
-  features: string[];
-  otherFeatures: string;
-  
-  // Timeline
   deadline: string;
   
-  // Additional info
-  additionalInfo: string;
+  // Design
+  designStyle: string;
+  inspirationSites: string;
 }
 
 const initialFormData: FormData = {
@@ -41,36 +28,20 @@ const initialFormData: FormData = {
   phone: "",
   projectType: [],
   description: "",
-  goals: "",
-  targetAudience: "",
-  hasLogo: "",
-  designStyle: "",
-  competitors: "",
-  inspirationSites: "",
-  features: [],
-  otherFeatures: "",
   deadline: "",
-  additionalInfo: "",
+  designStyle: "",
+  inspirationSites: "",
 };
 
 const STORAGE_KEY = "pixelpioneer-brief-form";
 
 const projectTypes = [
-  "Företagssida",
+  "Ny hemsida",
   "Uppdatering av befintlig sida",
-  "Redesign av befintlig sida",
+  "Redesign",
   "Landningssida",
   "Portfolio",
   "Annat",
-];
-
-const featureOptions = [
-  "Kontaktformulär",
-  "Bildgalleri",
-  "Karta/hitta hit",
-  "Sökfunktion",
-  "Flerspråkig",
-  "Sociala medier",
 ];
 
 export default function BriefPage() {
@@ -80,7 +51,7 @@ export default function BriefPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
-  const totalSteps = 5;
+  const totalSteps = 3;
 
   // Load saved form data from localStorage on mount
   useEffect(() => {
@@ -115,7 +86,7 @@ export default function BriefPage() {
     setValidationErrors([]);
   };
 
-  const handleCheckboxChange = (field: "projectType" | "features", value: string) => {
+  const handleCheckboxChange = (field: "projectType", value: string) => {
     setFormData((prev) => ({
       ...prev,
       [field]: prev[field].includes(value)
@@ -140,7 +111,6 @@ export default function BriefPage() {
       case 2:
         if (!formData.description.trim()) errors.push("Projektbeskrivning är obligatoriskt");
         break;
-      // Steps 3, 4, 5 have no required fields
     }
     
     return errors;
@@ -184,7 +154,6 @@ export default function BriefPage() {
     } catch (error) {
       console.error("Failed to send brief:", error);
       
-      // Provide more specific error message when possible
       let errorMessage = "Något gick fel vid skickandet. Vänligen försök igen eller kontakta mig direkt på hej@pixelpioneer.se";
       if (error instanceof Error && error.message && error.message !== "Något gick fel") {
         errorMessage = error.message;
@@ -212,27 +181,26 @@ export default function BriefPage() {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-gray-900 flex items-center justify-center px-3 sm:px-4 font-vt323">
-        <div className="text-center max-w-md px-2">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-limegreen rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
-            <CheckCircle size={36} className="text-gray-900 sm:w-12 sm:h-12" />
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-gray-900 flex items-center justify-center px-4 py-8 font-vt323">
+        <div className="text-center max-w-sm w-full">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 bg-limegreen rounded-full flex items-center justify-center mx-auto mb-4">
+            <CheckCircle size={28} className="text-gray-900 sm:w-8 sm:h-8" />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-limegreen font-vt323 mb-3 sm:mb-4">
-            Tack för din projektförfrågan!
+          <h1 className="text-xl sm:text-2xl font-bold text-limegreen font-vt323 mb-3">
+            Tack för din förfrågan!
           </h1>
-          <p className="text-gray-300 text-base sm:text-lg mb-6 sm:mb-8">
-            Jag har tagit emot din projektbeskrivning och återkommer inom 48 timmar
-            med en första bedömning och förslag.
+          <p className="text-gray-300 text-sm sm:text-base mb-4">
+            Jag har tagit emot din förfrågan och återkommer inom 48 timmar. Kolla din e-post för en bekräftelse!
           </p>
-          <p className="text-gray-400 text-base sm:text-lg mb-6 sm:mb-8">
-            Har du frågor under tiden? Kontakta mig på{" "}
+          <p className="text-gray-400 text-sm sm:text-base mb-6">
+            Har du frågor? Kontakta mig på{" "}
             <a href="mailto:hej@pixelpioneer.se" className="text-cyan-400 underline">
               hej@pixelpioneer.se
             </a>
           </p>
           <Link
             href="/"
-            className="inline-block bg-limegreen text-black font-bold px-5 sm:px-6 py-2.5 sm:py-3 text-base sm:text-lg rounded-lg hover:bg-cyan-400 transition-colors"
+            className="inline-block bg-limegreen text-black font-bold px-5 py-2.5 text-sm sm:text-base rounded-lg hover:bg-cyan-400 transition-colors"
           >
             Tillbaka till startsidan
           </Link>
@@ -242,29 +210,28 @@ export default function BriefPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-gray-900 py-8 md:py-12 px-3 sm:px-4 font-vt323">
-      <div className="max-w-3xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-gray-900 py-6 sm:py-8 md:py-12 px-4 sm:px-6 font-vt323">
+      <div className="max-w-2xl mx-auto w-full">
         {/* Header */}
-        <div className="text-center mb-8 md:mb-12">
-          <Link href="/" className="inline-block mb-4 md:mb-6">
-            <Rocket size={40} className="text-limegreen mx-auto md:w-12 md:h-12" />
+        <div className="text-center mb-5 sm:mb-8">
+          <Link href="/" className="inline-block mb-2 sm:mb-4">
+            <Rocket size={28} className="text-limegreen mx-auto sm:w-8 sm:h-8" />
           </Link>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-limegreen font-vt323 mb-3 md:mb-4">
-            Projektformulär
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-limegreen font-vt323 mb-1.5 sm:mb-2">
+            Offertförfrågan
           </h1>
-          <p className="text-gray-300 text-base md:text-lg max-w-xl mx-auto px-2">
-            Fyll i formuläret så får jag en bild av vad du behöver. Ju mer detaljer, desto
-            bättre kan jag hjälpa dig!
+          <p className="text-gray-400 text-sm sm:text-base max-w-xs mx-auto">
+            Tar 2 min – jag hör av mig inom 48h
           </p>
         </div>
 
         {/* Progress bar */}
-        <div className="mb-6 md:mb-8">
-          <div className="flex justify-between text-sm sm:text-base text-gray-400 mb-2">
-            <span>Steg {currentStep} av {totalSteps}</span>
+        <div className="mb-4">
+          <div className="flex justify-between text-xs sm:text-sm text-gray-500 mb-1">
+            <span>Steg {currentStep}/{totalSteps}</span>
             <span>{Math.round((currentStep / totalSteps) * 100)}%</span>
           </div>
-          <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+          <div className="h-1 bg-gray-700 rounded-full overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-limegreen to-cyan-400 transition-all duration-300"
               style={{ width: `${(currentStep / totalSteps) * 100}%` }}
@@ -274,46 +241,41 @@ export default function BriefPage() {
 
         {/* Validation errors */}
         {validationErrors.length > 0 && (
-          <div className="bg-red-900/30 border border-red-500/50 rounded-lg p-4 flex items-start gap-3">
-            <AlertCircle className="text-red-400 shrink-0 mt-0.5" size={20} />
-            <div>
-              <p className="text-red-400 font-medium mb-1">Vänligen korrigera följande:</p>
-              <ul className="text-red-300 text-sm space-y-1">
-                {validationErrors.map((error, index) => (
-                  <li key={index}>• {error}</li>
-                ))}
-              </ul>
-            </div>
+          <div className="bg-red-900/30 border border-red-500/50 rounded-lg p-3 flex items-start gap-2 mb-4">
+            <AlertCircle className="text-red-400 shrink-0 mt-0.5" size={16} />
+            <ul className="text-red-300 text-sm space-y-0.5">
+              {validationErrors.map((error, index) => (
+                <li key={index}>• {error}</li>
+              ))}
+            </ul>
           </div>
         )}
 
         {/* Submit error */}
         {submitError && (
-          <div className="bg-red-900/30 border border-red-500/50 rounded-lg p-4 flex items-start gap-3">
-            <AlertCircle className="text-red-400 shrink-0 mt-0.5" size={20} />
-            <div>
-              <p className="text-red-400 font-medium">{submitError}</p>
-            </div>
+          <div className="bg-red-900/30 border border-red-500/50 rounded-lg p-3 flex items-start gap-2 mb-4">
+            <AlertCircle className="text-red-400 shrink-0 mt-0.5" size={16} />
+            <p className="text-red-300 text-sm">{submitError}</p>
           </div>
         )}
 
         {/* Form */}
-        <form onSubmit={(e) => e.preventDefault()} className="space-y-8">
+        <form onSubmit={(e) => e.preventDefault()} className="space-y-4 sm:space-y-6">
           {/* Step 1: Contact details */}
           {currentStep === 1 && (
-            <div className="bg-gray-800/50 border border-limegreen/30 rounded-lg p-4 sm:p-6 md:p-8">
-              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-limegreen/20 rounded-full flex items-center justify-center">
-                  <Target size={16} className="text-limegreen sm:w-5 sm:h-5" />
+            <div className="bg-gray-800/50 border border-limegreen/30 rounded-xl p-4 sm:p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-7 h-7 bg-limegreen/20 rounded-full flex items-center justify-center shrink-0">
+                  <Target size={14} className="text-limegreen" />
                 </div>
-                <h2 className="text-xl sm:text-2xl font-bold text-cyan-400 font-vt323">
+                <h2 className="text-base sm:text-lg font-bold text-cyan-400 font-vt323">
                   Kontaktuppgifter
                 </h2>
               </div>
               
-              <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="space-y-3">
                 <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">
+                  <label className="block text-gray-300 text-sm mb-1">
                     Namn <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -322,23 +284,12 @@ export default function BriefPage() {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none"
                     placeholder="Ditt namn"
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">Företag</label>
-                  <input
-                    type="text"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleInputChange}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
-                    placeholder="Företagsnamn (om aktuellt)"
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">
+                  <label className="block text-gray-300 text-sm mb-1">
                     E-post <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -347,20 +298,33 @@ export default function BriefPage() {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none"
                     placeholder="din@epost.se"
                   />
                 </div>
-                <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">Telefon</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
-                    placeholder="07XX-XX XX XX"
-                  />
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block text-gray-300 text-sm mb-1">Företag</label>
+                    <input
+                      type="text"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleInputChange}
+                      className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none"
+                      placeholder="Valfritt"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-gray-300 text-sm mb-1">Telefon</label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none"
+                      placeholder="Valfritt"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -368,28 +332,24 @@ export default function BriefPage() {
 
           {/* Step 2: About the project */}
           {currentStep === 2 && (
-            <div className="bg-gray-800/50 border border-limegreen/30 rounded-lg p-4 sm:p-6 md:p-8">
-              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-limegreen/20 rounded-full flex items-center justify-center">
-                  <Globe size={16} className="text-limegreen sm:w-5 sm:h-5" />
+            <div className="bg-gray-800/50 border border-limegreen/30 rounded-xl p-4 sm:p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-7 h-7 bg-limegreen/20 rounded-full flex items-center justify-center shrink-0">
+                  <Globe size={14} className="text-limegreen" />
                 </div>
-                <h2 className="text-xl sm:text-2xl font-bold text-cyan-400 font-vt323">
-                  Om projektet
+                <h2 className="text-base sm:text-lg font-bold text-cyan-400 font-vt323">
+                  Ditt projekt
                 </h2>
               </div>
 
-              <div className="space-y-4 sm:space-y-6">
+              <div className="space-y-3">
                 <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-2 sm:mb-3">Typ av projekt</label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
+                  <label className="block text-gray-300 text-sm mb-2">Typ av projekt</label>
+                  <div className="grid grid-cols-2 gap-2">
                     {projectTypes.map((type) => (
                       <label
                         key={type}
-                        className={`flex items-center gap-2 p-2.5 sm:p-3 rounded-lg border cursor-pointer transition-colors ${
-                          formData.projectType.includes(type)
-                            ? "bg-limegreen/20 border-limegreen text-limegreen"
-                            : "bg-gray-700 border-gray-600 text-gray-300 hover:border-gray-500"
-                        }`}
+                        className={`flex items-center justify-center py-2.5 px-2 rounded-lg border cursor-pointer transition-colors text-center ${formData.projectType.includes(type) ? "bg-limegreen/20 border-limegreen text-limegreen" : "bg-gray-700 border-gray-600 text-gray-300"}`}
                       >
                         <input
                           type="checkbox"
@@ -397,14 +357,14 @@ export default function BriefPage() {
                           onChange={() => handleCheckboxChange("projectType", type)}
                           className="sr-only"
                         />
-                        <span className="text-sm sm:text-base">{type}</span>
+                        <span className="text-sm">{type}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">
+                  <label className="block text-gray-300 text-sm mb-1">
                     Beskriv projektet <span className="text-red-400">*</span>
                   </label>
                   <textarea
@@ -412,223 +372,87 @@ export default function BriefPage() {
                     value={formData.description}
                     onChange={handleInputChange}
                     required
-                    rows={4}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
-                    placeholder="Berätta kort om ditt företag och vad du vill uppnå med hemsidan..."
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">Mål med hemsidan</label>
-                  <textarea
-                    name="goals"
-                    value={formData.goals}
-                    onChange={handleInputChange}
                     rows={3}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
-                    placeholder="T.ex. få fler kunder, sälja produkter, visa upp portfolio..."
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none resize-none"
+                    placeholder="Vad behöver du hjälp med?"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">Vem är din målgrupp?</label>
+                  <label className="block text-gray-300 text-sm mb-1">Deadline</label>
                   <input
                     type="text"
-                    name="targetAudience"
-                    value={formData.targetAudience}
+                    name="deadline"
+                    value={formData.deadline}
                     onChange={handleInputChange}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
-                    placeholder="T.ex. småföretagare i Stockholm, unga familjer..."
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none"
+                    placeholder="T.ex. inom 2 månader"
                   />
                 </div>
               </div>
             </div>
-          )}
-
-          {/* Step 3: Design & content */}
+          )}          {/* Step 3: Design style */}
           {currentStep === 3 && (
-            <div className="bg-gray-800/50 border border-limegreen/30 rounded-lg p-4 sm:p-6 md:p-8">
-              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-limegreen/20 rounded-full flex items-center justify-center">
-                  <Palette size={16} className="text-limegreen sm:w-5 sm:h-5" />
+            <div className="bg-gray-800/50 border border-limegreen/30 rounded-xl p-4 sm:p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-7 h-7 bg-limegreen/20 rounded-full flex items-center justify-center shrink-0">
+                  <Palette size={14} className="text-limegreen" />
                 </div>
-                <h2 className="text-xl sm:text-2xl font-bold text-cyan-400 font-vt323">
-                  Design & innehåll
+                <h2 className="text-base sm:text-lg font-bold text-cyan-400 font-vt323">
+                  Vilken känsla?
                 </h2>
               </div>
 
-              <div className="space-y-4 sm:space-y-6">
+              <div className="space-y-3">
                 <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">Har du en logotyp?</label>
-                  <select
-                    name="hasLogo"
-                    value={formData.hasLogo}
-                    onChange={handleInputChange}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
-                  >
-                    <option value="">Välj...</option>
-                    <option value="Ja, i hög kvalitet">Ja, i hög kvalitet</option>
-                    <option value="Ja, men behöver uppdateras">Ja, men behöver uppdateras</option>
-                    <option value="Nej, behöver en ny">Nej, behöver en ny</option>
-                    <option value="Nej, inte aktuellt">Nej, inte aktuellt</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">Önskad stil/känsla</label>
+                  <label className="block text-gray-300 text-sm mb-1">Önskad stil/känsla</label>
                   <input
                     type="text"
                     name="designStyle"
                     value={formData.designStyle}
                     onChange={handleInputChange}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
-                    placeholder="T.ex. modern, minimalistisk, lekfull, professionell..."
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none"
+                    placeholder="Modern, minimalistisk, lekfull..."
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">
-                    Konkurrenter eller liknande verksamheter
-                  </label>
-                  <textarea
-                    name="competitors"
-                    value={formData.competitors}
-                    onChange={handleInputChange}
-                    rows={2}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
-                    placeholder="Länka gärna till deras hemsidor..."
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">
-                    Hemsidor du gillar (inspiration)
+                  <label className="block text-gray-300 text-sm mb-1">
+                    Inspiration (valfritt)
                   </label>
                   <textarea
                     name="inspirationSites"
                     value={formData.inspirationSites}
                     onChange={handleInputChange}
                     rows={2}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
-                    placeholder="Länka gärna och berätta vad du gillar med dem..."
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Step 4: Features */}
-          {currentStep === 4 && (
-            <div className="bg-gray-800/50 border border-limegreen/30 rounded-lg p-4 sm:p-6 md:p-8">
-              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-limegreen/20 rounded-full flex items-center justify-center">
-                  <Rocket size={16} className="text-limegreen sm:w-5 sm:h-5" />
-                </div>
-                <h2 className="text-xl sm:text-2xl font-bold text-cyan-400 font-vt323">
-                  Funktioner
-                </h2>
-              </div>
-
-              <div className="space-y-4 sm:space-y-6">
-                <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-2 sm:mb-3">
-                    Vilka funktioner behöver du?
-                  </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                    {featureOptions.map((feature) => (
-                      <label
-                        key={feature}
-                        className={`flex items-center gap-2 p-2.5 sm:p-3 rounded-lg border cursor-pointer transition-colors ${
-                          formData.features.includes(feature)
-                            ? "bg-limegreen/20 border-limegreen text-limegreen"
-                            : "bg-gray-700 border-gray-600 text-gray-300 hover:border-gray-500"
-                        }`}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={formData.features.includes(feature)}
-                          onChange={() => handleCheckboxChange("features", feature)}
-                          className="sr-only"
-                        />
-                        <span className="text-sm sm:text-base">{feature}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">
-                    Andra funktioner eller önskemål
-                  </label>
-                  <textarea
-                    name="otherFeatures"
-                    value={formData.otherFeatures}
-                    onChange={handleInputChange}
-                    rows={3}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
-                    placeholder="Beskriv eventuella specialfunktioner..."
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Step 5: Timeline & additional info */}
-          {currentStep === 5 && (
-            <div className="bg-gray-800/50 border border-limegreen/30 rounded-lg p-4 sm:p-6 md:p-8">
-              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-limegreen/20 rounded-full flex items-center justify-center">
-                  <Target size={16} className="text-limegreen sm:w-5 sm:h-5" />
-                </div>
-                <h2 className="text-xl sm:text-2xl font-bold text-cyan-400 font-vt323">
-                  Tidplan & övrigt
-                </h2>
-              </div>
-
-              <div className="space-y-4 sm:space-y-6">
-                <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">Önskad deadline</label>
-                  <input
-                    type="text"
-                    name="deadline"
-                    value={formData.deadline}
-                    onChange={handleInputChange}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
-                    placeholder="T.ex. inom 2 månader, före årsskiftet..."
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none resize-none"
+                    placeholder="Länka till hemsidor du gillar..."
                   />
                 </div>
 
-                <div>
-                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">
-                    Övrig information
-                  </label>
-                  <textarea
-                    name="additionalInfo"
-                    value={formData.additionalInfo}
-                    onChange={handleInputChange}
-                    rows={4}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
-                    placeholder="Något annat du vill berätta? Frågor, funderingar, speciella omständigheter..."
-                  />
+                <div className="bg-gray-700/40 rounded-lg p-3">
+                  <p className="text-gray-300 text-sm">
+                    <strong>Osäker?</strong> Vi går igenom allt på mötet.
+                  </p>
                 </div>
               </div>
             </div>
           )}
 
           {/* Navigation */}
-          <div className="flex justify-between items-center gap-4">
+          <div className="flex justify-between items-center pt-2">
             {currentStep > 1 ? (
               <button
                 type="button"
                 onClick={prevStep}
-                className="px-4 sm:px-6 py-2.5 sm:py-3 text-base sm:text-lg text-gray-400 hover:text-white transition-colors"
+                className="px-3 py-2 text-sm text-gray-400 hover:text-white transition-colors"
               >
                 ← Tillbaka
               </button>
             ) : (
               <Link
                 href="/"
-                className="px-4 sm:px-6 py-2.5 sm:py-3 text-base sm:text-lg text-gray-400 hover:text-white transition-colors"
+                className="px-3 py-2 text-sm text-gray-400 hover:text-white transition-colors"
               >
                 ← Avbryt
               </Link>
@@ -638,7 +462,7 @@ export default function BriefPage() {
               <button
                 type="button"
                 onClick={nextStep}
-                className="bg-gradient-to-r from-limegreen to-cyan-400 text-black font-bold px-6 sm:px-8 py-2.5 sm:py-3 text-base sm:text-lg rounded-lg hover:from-cyan-400 hover:to-limegreen transition-all"
+                className="bg-gradient-to-r from-limegreen to-cyan-400 text-black font-bold px-6 py-2.5 text-sm rounded-lg hover:from-cyan-400 hover:to-limegreen transition-all"
               >
                 Nästa →
               </button>
@@ -647,17 +471,13 @@ export default function BriefPage() {
                 type="button"
                 onClick={handleSubmit}
                 disabled={isSubmitting || !canSubmit()}
-                className={`bg-gradient-to-r from-limegreen to-cyan-400 text-black font-bold px-5 sm:px-8 py-2.5 sm:py-3 text-base sm:text-lg rounded-lg transition-all flex items-center gap-2 ${
-                  isSubmitting || !canSubmit()
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:from-cyan-400 hover:to-limegreen"
-                }`}
+                className={`bg-gradient-to-r from-limegreen to-cyan-400 text-black font-bold px-5 py-2.5 text-sm rounded-lg transition-all flex items-center gap-1.5 ${isSubmitting || !canSubmit() ? "opacity-50 cursor-not-allowed" : "hover:from-cyan-400 hover:to-limegreen"}`}
               >
                 {isSubmitting ? (
                   "Skickar..."
                 ) : (
                   <>
-                    <Send size={16} className="sm:w-[18px] sm:h-[18px]" />
+                    <Send size={14} />
                     Skicka
                   </>
                 )}
@@ -667,8 +487,8 @@ export default function BriefPage() {
         </form>
 
         {/* Footer */}
-        <p className="text-center text-gray-500 text-sm mt-8">
-          Genom att skicka formuläret samtycker du till att jag tar emot och sparar dina uppgifter för att ta fram en offert. All information behandlas endast av mig, inget kommer att delas med någon annan.
+        <p className="text-center text-gray-500 text-xs mt-5">
+          Genom att skicka godkänner du att jag sparar dina uppgifter för att kunna återkomma med en offert.
         </p>
       </div>
     </div>
