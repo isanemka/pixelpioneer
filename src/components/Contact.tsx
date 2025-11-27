@@ -1,6 +1,7 @@
 "use client";
 
-import { Mail, Phone, Gift } from "lucide-react";
+import { Mail, Phone, Gift, FileText } from "lucide-react";
+import Link from "next/link";
 
 export default function Contact() {
   return (
@@ -59,7 +60,21 @@ export default function Contact() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-gray-600">
-              <div className="mt-6 p-4 bg-gray-700 rounded-lg">
+              {/* Brief form link */}
+              <div className="mb-6">
+                <Link
+                  href="/brief"
+                  className="inline-flex items-center gap-3 bg-gradient-to-r from-limegreen to-cyan-400 text-black font-bold px-8 py-4 rounded-lg hover:from-cyan-400 hover:to-limegreen transition-all duration-300 text-xl shadow-lg hover:shadow-xl transform hover:scale-105"
+                >
+                  <FileText size={24} />
+                  Fyll i projektbrief
+                </Link>
+                <p className="text-gray-400 text-base mt-3">
+                  Berätta om ditt projekt så tar jag fram en skräddarsydd offert
+                </p>
+              </div>
+
+              <div className="p-4 bg-gray-700 rounded-lg">
                 <div className="flex items-center justify-center mb-2">
                   <Gift size={20} className="text-limegreen mr-2" />
                   <span className="text-limegreen font-bold">
