@@ -22,7 +22,7 @@ const services: Service[] = [
   {
     name: "Ny hemsida som ger fler kunder",
     value: "Tydlig väg till kontakt",
-    includes: "Design, texter, bilder, kontaktknappar och offertformulär",
+    includes: "Design, texter, bilder, kontaktknappar och projektformulär",
     icon: Globe,
   },
   {

@@ -1,6 +1,7 @@
 "use client";
 
-import { Rocket } from "lucide-react";
+import { Rocket, FileText } from "lucide-react";
+import Link from "next/link";
 
 export default function CTA() {
   return (
@@ -30,12 +31,20 @@ export default function CTA() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
+          <Link
+            href="/brief"
+            className="group bg-gradient-to-r from-limegreen to-cyan-400 text-black px-8 md:px-10 py-4 rounded-lg font-bold hover:from-cyan-400 hover:to-limegreen transition-all duration-300 text-2xl shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-cyan-500 inline-flex items-center gap-3"
+            aria-label="Fyll i projektformulär för att få offert"
+          >
+            <FileText size={24} />
+            <span className="group-hover:animate-pulse">Fyll i projektformulär</span>
+          </Link>
           <a
             href="#contact"
-            className="group bg-gradient-to-r from-limegreen to-cyan-400 text-black px-8 md:px-10 py-4 rounded-lg font-bold hover:from-cyan-400 hover:to-limegreen transition-all duration-300 text-2xl shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-cyan-500"
-            aria-label="Öppna kontaktformuläret för att få offert"
+            className="group border-2 border-limegreen text-limegreen px-8 md:px-10 py-4 rounded-lg font-bold hover:bg-limegreen hover:text-black transition-all duration-300 text-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-cyan-500"
+            aria-label="Gå till kontaktsektionen"
           >
-            <span className="group-hover:animate-pulse">Begär offert</span>
+            Kontakta mig direkt
           </a>
         </div>
       </div>

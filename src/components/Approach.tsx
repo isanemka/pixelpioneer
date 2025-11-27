@@ -106,7 +106,7 @@ const approaches: ApproachItem[] = [
     title: "Uppföljning & förbättring",
     phase: "Steg 6",
     icon: TrendingUp,
-    description: "Vi följer upp och förbättrar det som ger mest effekt",
+    description: "Jag följer upp och förbättrar det som ger mest effekt",
     deliverables: [
       "Enkel rapport",
       "Förslag på nästa steg",

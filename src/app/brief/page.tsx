@@ -165,15 +165,25 @@ export default function BriefPage() {
     setIsSubmitting(true);
     setSubmitError(null);
 
-    // TODO: Implement AWS SES email sending
     try {
-      // API call will go here
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch("/api/send-brief", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Något gick fel");
+      }
+
       clearSavedData();
       setIsSubmitted(true);
     } catch (error) {
       console.error("Failed to send brief:", error);
-      setSubmitError("Något gick fel vid skickandet. Vänligen försök igen eller kontakta oss direkt på hej@pixelpioneer.se");
+      setSubmitError("Något gick fel vid skickandet. Vänligen försök igen eller kontakta mig direkt på hej@pixelpioneer.se");
     } finally {
       setIsSubmitting(false);
     }
@@ -196,19 +206,19 @@ export default function BriefPage() {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-gray-900 flex items-center justify-center px-3 sm:px-4">
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-gray-900 flex items-center justify-center px-3 sm:px-4 font-vt323">
         <div className="text-center max-w-md px-2">
           <div className="w-16 h-16 sm:w-20 sm:h-20 bg-limegreen rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
             <CheckCircle size={36} className="text-gray-900 sm:w-12 sm:h-12" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-limegreen font-vt323 mb-3 sm:mb-4">
-            Tack för din brief!
+            Tack för din projektförfrågan!
           </h1>
           <p className="text-gray-300 text-base sm:text-lg mb-6 sm:mb-8">
             Jag har tagit emot din projektbeskrivning och återkommer inom 48 timmar
             med en första bedömning och förslag.
           </p>
-          <p className="text-gray-400 text-sm sm:text-base mb-6 sm:mb-8">
+          <p className="text-gray-400 text-base sm:text-lg mb-6 sm:mb-8">
             Har du frågor under tiden? Kontakta mig på{" "}
             <a href="mailto:hej@pixelpioneer.se" className="text-cyan-400 underline">
               hej@pixelpioneer.se
@@ -216,7 +226,7 @@ export default function BriefPage() {
           </p>
           <Link
             href="/"
-            className="inline-block bg-limegreen text-black font-bold px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg hover:bg-cyan-400 transition-colors"
+            className="inline-block bg-limegreen text-black font-bold px-5 sm:px-6 py-2.5 sm:py-3 text-base sm:text-lg rounded-lg hover:bg-cyan-400 transition-colors"
           >
             Tillbaka till startsidan
           </Link>
@@ -226,7 +236,7 @@ export default function BriefPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-gray-900 py-8 md:py-12 px-3 sm:px-4">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-gray-900 py-8 md:py-12 px-3 sm:px-4 font-vt323">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 md:mb-12">
@@ -234,7 +244,7 @@ export default function BriefPage() {
             <Rocket size={40} className="text-limegreen mx-auto md:w-12 md:h-12" />
           </Link>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-limegreen font-vt323 mb-3 md:mb-4">
-            Projektbrief
+            Projektformulär
           </h1>
           <p className="text-gray-300 text-base md:text-lg max-w-xl mx-auto px-2">
             Fyll i formuläret så får jag en bild av vad du behöver. Ju mer detaljer, desto
@@ -244,7 +254,7 @@ export default function BriefPage() {
 
         {/* Progress bar */}
         <div className="mb-6 md:mb-8">
-          <div className="flex justify-between text-xs sm:text-sm text-gray-400 mb-2">
+          <div className="flex justify-between text-sm sm:text-base text-gray-400 mb-2">
             <span>Steg {currentStep} av {totalSteps}</span>
             <span>{Math.round((currentStep / totalSteps) * 100)}%</span>
           </div>
@@ -297,7 +307,7 @@ export default function BriefPage() {
               
               <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-1.5 sm:mb-2">
+                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">
                     Namn <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -306,23 +316,23 @@ export default function BriefPage() {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white focus:border-limegreen focus:outline-none transition-colors"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
                     placeholder="Ditt namn"
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-1.5 sm:mb-2">Företag</label>
+                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">Företag</label>
                   <input
                     type="text"
                     name="company"
                     value={formData.company}
                     onChange={handleInputChange}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white focus:border-limegreen focus:outline-none transition-colors"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
                     placeholder="Företagsnamn (om aktuellt)"
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-1.5 sm:mb-2">
+                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">
                     E-post <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -331,18 +341,18 @@ export default function BriefPage() {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white focus:border-limegreen focus:outline-none transition-colors"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
                     placeholder="din@epost.se"
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-1.5 sm:mb-2">Telefon</label>
+                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">Telefon</label>
                   <input
                     type="tel"
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white focus:border-limegreen focus:outline-none transition-colors"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
                     placeholder="07XX-XX XX XX"
                   />
                 </div>
@@ -364,7 +374,7 @@ export default function BriefPage() {
 
               <div className="space-y-4 sm:space-y-6">
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-2 sm:mb-3">Typ av projekt</label>
+                  <label className="block text-gray-300 text-base sm:text-lg mb-2 sm:mb-3">Typ av projekt</label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
                     {projectTypes.map((type) => (
                       <label
@@ -381,14 +391,14 @@ export default function BriefPage() {
                           onChange={() => handleCheckboxChange("projectType", type)}
                           className="sr-only"
                         />
-                        <span className="text-xs sm:text-sm">{type}</span>
+                        <span className="text-sm sm:text-base">{type}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-1.5 sm:mb-2">
+                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">
                     Beskriv projektet <span className="text-red-400">*</span>
                   </label>
                   <textarea
@@ -397,31 +407,31 @@ export default function BriefPage() {
                     onChange={handleInputChange}
                     required
                     rows={4}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
                     placeholder="Berätta kort om ditt företag och vad du vill uppnå med hemsidan..."
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-1.5 sm:mb-2">Mål med hemsidan</label>
+                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">Mål med hemsidan</label>
                   <textarea
                     name="goals"
                     value={formData.goals}
                     onChange={handleInputChange}
                     rows={3}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
                     placeholder="T.ex. få fler kunder, sälja produkter, visa upp portfolio..."
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-1.5 sm:mb-2">Vem är din målgrupp?</label>
+                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">Vem är din målgrupp?</label>
                   <input
                     type="text"
                     name="targetAudience"
                     value={formData.targetAudience}
                     onChange={handleInputChange}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white focus:border-limegreen focus:outline-none transition-colors"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
                     placeholder="T.ex. småföretagare i Stockholm, unga familjer..."
                   />
                 </div>
@@ -443,12 +453,12 @@ export default function BriefPage() {
 
               <div className="space-y-4 sm:space-y-6">
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-1.5 sm:mb-2">Har du en logotyp?</label>
+                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">Har du en logotyp?</label>
                   <select
                     name="hasLogo"
                     value={formData.hasLogo}
                     onChange={handleInputChange}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white focus:border-limegreen focus:outline-none transition-colors"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
                   >
                     <option value="">Välj...</option>
                     <option value="Ja, i hög kvalitet">Ja, i hög kvalitet</option>
@@ -459,19 +469,19 @@ export default function BriefPage() {
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-1.5 sm:mb-2">Önskad stil/känsla</label>
+                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">Önskad stil/känsla</label>
                   <input
                     type="text"
                     name="designStyle"
                     value={formData.designStyle}
                     onChange={handleInputChange}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white focus:border-limegreen focus:outline-none transition-colors"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
                     placeholder="T.ex. modern, minimalistisk, lekfull, professionell..."
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-1.5 sm:mb-2">
+                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">
                     Konkurrenter eller liknande verksamheter
                   </label>
                   <textarea
@@ -479,13 +489,13 @@ export default function BriefPage() {
                     value={formData.competitors}
                     onChange={handleInputChange}
                     rows={2}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
                     placeholder="Länka gärna till deras hemsidor..."
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-1.5 sm:mb-2">
+                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">
                     Hemsidor du gillar (inspiration)
                   </label>
                   <textarea
@@ -493,7 +503,7 @@ export default function BriefPage() {
                     value={formData.inspirationSites}
                     onChange={handleInputChange}
                     rows={2}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
                     placeholder="Länka gärna och berätta vad du gillar med dem..."
                   />
                 </div>
@@ -515,7 +525,7 @@ export default function BriefPage() {
 
               <div className="space-y-4 sm:space-y-6">
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-2 sm:mb-3">
+                  <label className="block text-gray-300 text-base sm:text-lg mb-2 sm:mb-3">
                     Vilka funktioner behöver du?
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
@@ -534,14 +544,14 @@ export default function BriefPage() {
                           onChange={() => handleCheckboxChange("features", feature)}
                           className="sr-only"
                         />
-                        <span className="text-xs sm:text-sm">{feature}</span>
+                        <span className="text-sm sm:text-base">{feature}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-1.5 sm:mb-2">
+                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">
                     Andra funktioner eller önskemål
                   </label>
                   <textarea
@@ -549,7 +559,7 @@ export default function BriefPage() {
                     value={formData.otherFeatures}
                     onChange={handleInputChange}
                     rows={3}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
                     placeholder="Beskriv eventuella specialfunktioner..."
                   />
                 </div>
@@ -571,19 +581,19 @@ export default function BriefPage() {
 
               <div className="space-y-4 sm:space-y-6">
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-1.5 sm:mb-2">Önskad deadline</label>
+                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">Önskad deadline</label>
                   <input
                     type="text"
                     name="deadline"
                     value={formData.deadline}
                     onChange={handleInputChange}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white focus:border-limegreen focus:outline-none transition-colors"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors"
                     placeholder="T.ex. inom 2 månader, före årsskiftet..."
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-sm sm:text-base mb-1.5 sm:mb-2">
+                  <label className="block text-gray-300 text-base sm:text-lg mb-1.5 sm:mb-2">
                     Övrig information
                   </label>
                   <textarea
@@ -591,7 +601,7 @@ export default function BriefPage() {
                     value={formData.additionalInfo}
                     onChange={handleInputChange}
                     rows={4}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-lg text-white focus:border-limegreen focus:outline-none transition-colors resize-none"
                     placeholder="Något annat du vill berätta? Frågor, funderingar, speciella omständigheter..."
                   />
                 </div>
@@ -605,14 +615,14 @@ export default function BriefPage() {
               <button
                 type="button"
                 onClick={prevStep}
-                className="px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base text-gray-400 hover:text-white transition-colors"
+                className="px-4 sm:px-6 py-2.5 sm:py-3 text-base sm:text-lg text-gray-400 hover:text-white transition-colors"
               >
                 ← Tillbaka
               </button>
             ) : (
               <Link
                 href="/"
-                className="px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base text-gray-400 hover:text-white transition-colors"
+                className="px-4 sm:px-6 py-2.5 sm:py-3 text-base sm:text-lg text-gray-400 hover:text-white transition-colors"
               >
                 ← Avbryt
               </Link>
@@ -622,7 +632,7 @@ export default function BriefPage() {
               <button
                 type="button"
                 onClick={nextStep}
-                className="bg-gradient-to-r from-limegreen to-cyan-400 text-black font-bold px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg hover:from-cyan-400 hover:to-limegreen transition-all"
+                className="bg-gradient-to-r from-limegreen to-cyan-400 text-black font-bold px-6 sm:px-8 py-2.5 sm:py-3 text-base sm:text-lg rounded-lg hover:from-cyan-400 hover:to-limegreen transition-all"
               >
                 Nästa →
               </button>
@@ -631,7 +641,7 @@ export default function BriefPage() {
                 type="button"
                 onClick={handleSubmit}
                 disabled={isSubmitting || !canSubmit()}
-                className={`bg-gradient-to-r from-limegreen to-cyan-400 text-black font-bold px-5 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg transition-all flex items-center gap-2 ${
+                className={`bg-gradient-to-r from-limegreen to-cyan-400 text-black font-bold px-5 sm:px-8 py-2.5 sm:py-3 text-base sm:text-lg rounded-lg transition-all flex items-center gap-2 ${
                   isSubmitting || !canSubmit()
                     ? "opacity-50 cursor-not-allowed"
                     : "hover:from-cyan-400 hover:to-limegreen"
@@ -642,7 +652,7 @@ export default function BriefPage() {
                 ) : (
                   <>
                     <Send size={16} className="sm:w-[18px] sm:h-[18px]" />
-                    Skicka brief
+                    Skicka
                   </>
                 )}
               </button>

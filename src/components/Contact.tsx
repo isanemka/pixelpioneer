@@ -67,7 +67,7 @@ export default function Contact() {
                   className="inline-flex items-center gap-3 bg-gradient-to-r from-limegreen to-cyan-400 text-black font-bold px-8 py-4 rounded-lg hover:from-cyan-400 hover:to-limegreen transition-all duration-300 text-xl shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
                   <FileText size={24} />
-                  Fyll i projektbrief
+                  Fyll i projektformulär
                 </Link>
                 <p className="text-gray-400 text-base mt-3">
                   Berätta om ditt projekt så tar jag fram en skräddarsydd offert
