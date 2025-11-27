@@ -339,7 +339,7 @@ Skickat via pixelpioneer.se/brief
       // Email address not verified in SES
       if (errorName === "MessageRejected" && error.message.includes("not verified")) {
         return NextResponse.json(
-          { error: "E-postadressen kunde inte verifieras. Kontrollera att du angett rätt adress." },
+          { error: "Tjänsten kunde inte skicka e-post. Kontakta mig direkt på hej@pixelpioneer.se" },
           { status: 400 }
         );
       }
