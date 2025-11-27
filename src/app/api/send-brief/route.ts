@@ -271,7 +271,7 @@ Skickat via pixelpioneer.se/brief
           <tr>
             <td style="text-align: center; padding-top: 30px;">
               <p style="font-family: 'VT323', 'Courier New', monospace; color: #666666; font-size: 18px; margin: 0;">
-                © ${new Date().getFullYear()} PixelPioneer • Webbyrå med retro-touch
+                © ${new Date().getFullYear()} PixelPioneer • Webbsidor som gör skillnad
               </p>
               <p style="font-family: 'VT323', 'Courier New', monospace; color: #666666; font-size: 16px; margin: 10px 0 0 0;">
                 <a href="https://pixelpioneer.se" style="color: #32CD32; text-decoration: none;">pixelpioneer.se</a>
