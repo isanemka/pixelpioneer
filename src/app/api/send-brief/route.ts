@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
+// Validate required AWS credentials at startup
+if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
+  console.error(
+    "Missing AWS credentials: AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables must be set."
+  );
+}
+
 const ses = new SESClient({
   region: process.env.AWS_REGION || "eu-north-1",
   credentials: {
@@ -28,8 +35,40 @@ interface BriefFormData {
   additionalInfo: string;
 }
 
+// Sanitize text for email headers (remove newlines and control characters)
+function sanitizeForHeader(text: string): string {
+  return text.replace(/[\r\n\t]/g, " ").trim();
+}
+
+// Escape HTML to prevent XSS
+function escapeHtml(text: string): string {
+  const htmlEntities: Record<string, string> = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  };
+  return text.replace(/[&<>"']/g, (char) => htmlEntities[char] || char);
+}
+
+// Validate email format
+function isValidEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
 export async function POST(request: NextRequest) {
   try {
+    // Validate AWS credentials are available
+    if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
+      console.error("AWS credentials not configured");
+      return NextResponse.json(
+        { error: "E-posttjänsten är inte konfigurerad. Kontakta oss direkt." },
+        { status: 500 }
+      );
+    }
+
     const formData: BriefFormData = await request.json();
 
     // Validate required fields
@@ -39,6 +78,24 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Validate email format
+    if (!isValidEmail(formData.email)) {
+      return NextResponse.json(
+        { error: "Ange en giltig e-postadress" },
+        { status: 400 }
+      );
+    }
+
+    // Sanitize inputs for email headers
+    const safeName = sanitizeForHeader(formData.name);
+    const safeCompany = sanitizeForHeader(formData.company || "Privat");
+
+    // Escape HTML for confirmation email
+    const htmlName = escapeHtml(formData.name);
+    const htmlCompany = escapeHtml(formData.company || "Privat");
+    const htmlProjectType = escapeHtml(formData.projectType?.join(", ") || "Ej angivet");
+    const htmlDeadline = escapeHtml(formData.deadline || "Ej angivet");
 
     // Build email content
     const emailBody = `
@@ -91,7 +148,7 @@ Skickat via pixelpioneer.se/brief
       },
       Message: {
         Subject: {
-          Data: `Projektförfrågan från ${formData.name} - ${formData.company || "Privat"}`,
+          Data: `Projektförfrågan från ${safeName} - ${safeCompany}`,
           Charset: "UTF-8",
         },
         Body: {
@@ -137,7 +194,7 @@ Skickat via pixelpioneer.se/brief
               
               <!-- Greeting -->
               <h2 style="font-family: 'VT323', 'Courier New', monospace; color: #ffffff; font-size: 32px; margin: 0 0 20px 0;">
-                Tack för din förfrågan, ${formData.name}!
+                Tack för din förfrågan, ${htmlName}!
               </h2>
               
               <p style="font-family: 'VT323', 'Courier New', monospace; color: #b0b0b0; font-size: 22px; line-height: 1.4; margin: 0 0 25px 0;">
@@ -152,13 +209,13 @@ Skickat via pixelpioneer.se/brief
                       Din förfrågan
                     </h3>
                     <p style="font-family: 'VT323', 'Courier New', monospace; color: #ffffff; font-size: 20px; margin: 0 0 8px 0;">
-                      <strong>Projekttyp:</strong> ${formData.projectType?.join(", ") || "Ej angivet"}
+                      <strong>Projekttyp:</strong> ${htmlProjectType}
                     </p>
                     <p style="font-family: 'VT323', 'Courier New', monospace; color: #ffffff; font-size: 20px; margin: 0 0 8px 0;">
-                      <strong>Önskad deadline:</strong> ${formData.deadline || "Ej angivet"}
+                      <strong>Önskad deadline:</strong> ${htmlDeadline}
                     </p>
                     <p style="font-family: 'VT323', 'Courier New', monospace; color: #ffffff; font-size: 20px; margin: 0;">
-                      <strong>Företag:</strong> ${formData.company || "Privat"}
+                      <strong>Företag:</strong> ${htmlCompany}
                     </p>
                   </td>
                 </tr>
@@ -246,7 +303,7 @@ Skickat via pixelpioneer.se/brief
             Charset: "UTF-8",
           },
           Text: {
-            Data: `Hej ${formData.name}!\n\nTack för din projektförfrågan! Jag har tagit emot din förfrågan och är taggad på att höra mer om ditt projekt.\n\nVad händer nu?\n1. Jag går igenom din förfrågan inom 48 timmar\n2. Jag hör av mig för ett första samtal\n3. Du får ett skräddarsytt förslag\n\nHar du frågor? Svara på detta mail eller kontakta mig på hej@pixelpioneer.se\n\n--\nPixelPioneer\npixelpioneer.se`,
+            Data: `Hej ${safeName}!\n\nTack för din projektförfrågan! Jag har tagit emot din förfrågan och är taggad på att höra mer om ditt projekt.\n\nVad händer nu?\n1. Jag går igenom din förfrågan inom 48 timmar\n2. Jag hör av mig för ett första samtal\n3. Du får ett skräddarsytt förslag\n\nHar du frågor? Svara på detta mail eller kontakta mig på hej@pixelpioneer.se\n\n--\nPixelPioneer\npixelpioneer.se`,
             Charset: "UTF-8",
           },
         },

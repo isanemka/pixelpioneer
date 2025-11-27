@@ -183,7 +183,13 @@ export default function BriefPage() {
       setIsSubmitted(true);
     } catch (error) {
       console.error("Failed to send brief:", error);
-      setSubmitError("Något gick fel vid skickandet. Vänligen försök igen eller kontakta mig direkt på hej@pixelpioneer.se");
+      
+      // Provide more specific error message when possible
+      let errorMessage = "Något gick fel vid skickandet. Vänligen försök igen eller kontakta mig direkt på hej@pixelpioneer.se";
+      if (error instanceof Error && error.message && error.message !== "Något gick fel") {
+        errorMessage = error.message;
+      }
+      setSubmitError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
