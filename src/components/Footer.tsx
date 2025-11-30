@@ -22,7 +22,7 @@ export default function Footer() {
         <button
           type="button"
           onClick={resetCookieConsent}
-          className="text-gray-400 hover:text-[#00ff88] transition-colors cursor-pointer"
+          className="text-gray-400 hover:text-[#00ff88] transition-colors"
         >
           Ändra cookie-val
         </button>
