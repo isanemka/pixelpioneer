@@ -35,7 +35,12 @@ export default function CookieBanner() {
   if (!showBanner) return null;
 
   return (
-    <div className="z-20 fixed bottom-0 left-0 w-full bg-[#1a1a2e] border-t-2 border-[#00ff88] text-white p-4 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div
+      className="z-20 fixed bottom-0 left-0 w-full bg-[#1a1a2e] border-t-2 border-[#00ff88] text-white p-4 flex flex-col md:flex-row justify-between items-center gap-4"
+      role="dialog"
+      aria-label="Cookie consent"
+      aria-live="polite"
+    >
       <p className="font-vt323 text-lg text-gray-300 text-center md:text-left">
         🍪 Vi använder anonym statistik för att förbättra sidan. Ingen personlig
         data sparas.{" "}
