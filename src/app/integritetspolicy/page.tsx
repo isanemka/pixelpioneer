@@ -56,7 +56,7 @@ export default function IntegritetspolicyPage() {
             </h2>
             <ul className="list-disc list-inside space-y-2">
               <li>IP-adresser</li>
-              <li>Personligt identifierbar information</li>
+              <li>Personlig identifierbar information</li>
               <li>Cookies för spårning</li>
             </ul>
           </section>
