@@ -20,6 +20,7 @@ export default function Footer() {
         </Link>
         <span className="text-gray-600">|</span>
         <button
+          type="button"
           onClick={resetCookieConsent}
           className="text-gray-400 hover:text-[#00ff88] transition-colors cursor-pointer"
         >

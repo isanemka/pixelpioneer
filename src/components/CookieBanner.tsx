@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 
 export default function CookieBanner() {
   const [showBanner, setShowBanner] = useState<boolean | null>(null);
@@ -38,21 +39,23 @@ export default function CookieBanner() {
       <p className="font-vt323 text-lg text-gray-300 text-center md:text-left">
         🍪 Vi använder anonym statistik för att förbättra sidan. Ingen personlig
         data sparas.{" "}
-        <a
+        <Link
           href="/integritetspolicy"
           className="text-[#00ff88] hover:underline"
         >
           Läs mer
-        </a>
+        </Link>
       </p>
       <div className="flex gap-3">
         <button
+          type="button"
           onClick={declineCookies}
           className="font-vt323 text-lg px-4 py-2 border-2 border-gray-500 text-gray-300 hover:border-[#00ff88] hover:text-[#00ff88] transition-colors cursor-pointer"
         >
           Avböj
         </button>
         <button
+          type="button"
           onClick={acceptCookies}
           className="font-vt323 text-lg px-4 py-2 bg-[#00ff88] text-[#1a1a2e] hover:bg-[#00cc6a] transition-colors cursor-pointer"
         >
