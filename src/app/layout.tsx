@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     images: ["/images/PixelAssistant.png"],
   },
   icons: {
-    icon: "/images/rocket_with_stars.png",
+    icon: "/images/favicon.png",
   },
 };
 

@@ -7,11 +7,11 @@ export default function Header() {
     <header className="bg-darkbg text-white p-3">
       <nav className="container mx-auto flex justify-between items-center">
         <Image
-          src="/images/rocket_with_stars.png"
-          alt="Rocket with stars"
+          src="/images/logo-white.png"
+          alt="PixelPioneer logo"
           width={64}
           height={64}
-          className="w-8 h-8 md:w-16 md:h-16 mt-1"
+          className="w-8 h-8 md:w-12 md:h-12"
         />
         <ul className="flex space-x-4 text-lg md:text-2xl font-vt323">
           <li>
