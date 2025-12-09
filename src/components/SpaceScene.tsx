@@ -148,49 +148,49 @@ export default function SpaceScene() {
   // Create asteroids - using a ref to hold the function for self-reference
   const createAsteroidRef = useRef<() => void>(() => {});
   
-  createAsteroidRef.current = () => {
-    if (isSpawningAsteroidRef.current) return;
-    isSpawningAsteroidRef.current = true;
-
-    const scene = sceneRef.current;
-    if (!scene) return;
-
-    const containerWidth = scene.clientWidth;
-    const asteroid = document.createElement("div");
-    asteroid.classList.add("asteroid");
-
-    let left;
-    if (Math.random() < 0.5) {
-      left = Math.random() * (containerWidth * 0.35);
-    } else {
-      left = containerWidth * 0.65 + Math.random() * (containerWidth * 0.1);
-    }
-
-    asteroid.style.top = `-50px`;
-    asteroid.style.left = `${left}px`;
-
-    const size = Math.random() * 30 + 20;
-    asteroid.style.width = `${size}px`;
-    asteroid.style.height = `${size}px`;
-
-    const duration = Math.random() * 5 + 5;
-    asteroid.style.animation = `moveAsteroids ${duration}s linear`;
-
-    scene.appendChild(asteroid);
-
-    setTimeout(() => {
-      asteroid.remove();
-    }, duration * 1000);
-
-    const nextSpawn = Math.random() * 5000 + 3000;
-    asteroidTimeoutRef.current = setTimeout(() => {
-      isSpawningAsteroidRef.current = false;
-      createAsteroidRef.current();
-    }, nextSpawn);
-  };
-  
   const createAsteroid = useCallback(() => {
-    createAsteroidRef.current();
+    const createAsteroidInternal = () => {
+      if (isSpawningAsteroidRef.current) return;
+      isSpawningAsteroidRef.current = true;
+
+      const scene = sceneRef.current;
+      if (!scene) return;
+
+      const containerWidth = scene.clientWidth;
+      const asteroid = document.createElement("div");
+      asteroid.classList.add("asteroid");
+
+      let left;
+      if (Math.random() < 0.5) {
+        left = Math.random() * (containerWidth * 0.35);
+      } else {
+        left = containerWidth * 0.65 + Math.random() * (containerWidth * 0.1);
+      }
+
+      asteroid.style.top = `-50px`;
+      asteroid.style.left = `${left}px`;
+
+      const size = Math.random() * 30 + 20;
+      asteroid.style.width = `${size}px`;
+      asteroid.style.height = `${size}px`;
+
+      const duration = Math.random() * 5 + 5;
+      asteroid.style.animation = `moveAsteroids ${duration}s linear`;
+
+      scene.appendChild(asteroid);
+
+      setTimeout(() => {
+        asteroid.remove();
+      }, duration * 1000);
+
+      const nextSpawn = Math.random() * 5000 + 3000;
+      asteroidTimeoutRef.current = setTimeout(() => {
+        isSpawningAsteroidRef.current = false;
+        createAsteroidRef.current();
+      }, nextSpawn);
+    };
+    
+    createAsteroidInternal();
   }, []);
 
   useEffect(() => {
@@ -199,6 +199,9 @@ export default function SpaceScene() {
     ).matches;
 
     createStars();
+    
+    // Store the createAsteroid function in the ref for recursive calls
+    createAsteroidRef.current = createAsteroid;
 
     if (!prefersReducedMotion) {
       createAsteroid();

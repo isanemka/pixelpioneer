@@ -13,7 +13,7 @@ export default function Contact() {
           Get in Touch
         </h2>
         <p className="text-textSecondary text-center mb-12 max-w-2xl mx-auto">
-          Ready to build something amazing? Let's talk.
+          Ready to build something amazing? Let&apos;s talk.
         </p>
 
         <div className="max-w-2xl mx-auto">
@@ -64,7 +64,7 @@ export default function Contact() {
               {/* CTA */}
               <div className="text-center pt-4">
                 <p className="text-textSecondary mb-4">
-                  Kostnadsfri konsultation – ring eller maila för ett första samtal
+                  Kostnadsfri konsultation &ndash; ring eller maila för ett första samtal
                 </p>
                 <a
                   href="#projects"

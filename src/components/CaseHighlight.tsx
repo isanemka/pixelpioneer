@@ -2,11 +2,6 @@
 
 import Image from "next/image";
 
-interface CaseSection {
-  label: string;
-  content: string;
-}
-
 const caseStudy = {
   title: "Streamlined E-commerce Experience",
   image: "/images/rocket_with_stars.png",
