@@ -19,7 +19,7 @@ export default function Header() {
               href="#projects" 
               className="hover:text-accentNeon transition-colors focus:outline-none focus:text-accentNeon"
             >
-              Projects
+              Projekt
             </a>
           </li>
           <li>
@@ -27,7 +27,7 @@ export default function Header() {
               href="#about" 
               className="hover:text-accentNeon transition-colors focus:outline-none focus:text-accentNeon"
             >
-              About
+              Om
             </a>
           </li>
           <li>
@@ -35,7 +35,7 @@ export default function Header() {
               href="#contact" 
               className="hover:text-accentNeon transition-colors focus:outline-none focus:text-accentNeon"
             >
-              Contact
+              Kontakt
             </a>
           </li>
         </ul>

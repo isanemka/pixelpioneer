@@ -10,10 +10,10 @@ export default function Contact() {
     >
       <div className="section-container">
         <h2 className="font-press-start-2p text-2xl md:text-4xl text-accentNeon mb-4 text-center">
-          Get in Touch
+          Kontakta Mig
         </h2>
         <p className="text-textSecondary text-center mb-12 max-w-2xl mx-auto">
-          Ready to build something amazing? Let&apos;s talk.
+          Redo att bygga något fantastiskt? Låt oss prata.
         </p>
 
         <div className="max-w-2xl mx-auto">
@@ -32,7 +32,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="font-press-start-2p text-xs text-accentNeon mb-2">
-                    Email
+                    E-post
                   </h3>
                   <a
                     href="mailto:hej@pixelpioneer.se"
@@ -50,7 +50,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="font-press-start-2p text-xs text-accentNeon mb-2">
-                    Phone
+                    Telefon
                   </h3>
                   <a
                     href="tel:+46734644604"
@@ -70,7 +70,7 @@ export default function Contact() {
                   href="#projects"
                   className="inline-block px-8 py-4 bg-accentMagenta text-textPrimary font-press-start-2p text-sm hover:bg-accentNeon hover:text-darkBg transition-colors duration-300 focus:outline-none focus:ring-4 focus:ring-accentMagenta/50"
                 >
-                  View Portfolio
+                  Se Portfolio
                 </a>
               </div>
             </div>

@@ -255,14 +255,14 @@ export default function SpaceScene() {
           Pioneer
         </h1>
         <p className="text-accentNeon text-lg md:text-xl mt-6 font-body max-w-2xl mx-auto px-4">
-          Modern pixel experiences with a sharp, minimal edge.
+          Moderna pixelupplevelser med en skarp, minimal edge.
         </p>
         <div className="mt-8">
           <a
             href="#projects"
             className="inline-block px-8 py-4 bg-accentNeon text-darkBg font-press-start-2p text-sm hover:bg-accentMagenta hover:text-white transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-accentNeon/50"
           >
-            View Projects
+            Se Projekt
           </a>
         </div>
       </div>

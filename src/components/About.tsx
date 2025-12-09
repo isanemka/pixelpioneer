@@ -18,17 +18,17 @@ const strengths = [
   {
     icon: Code2,
     title: "Modern Stack",
-    description: "Next.js, TypeScript, Tailwind for fast, type-safe development",
+    description: "Next.js, TypeScript, Tailwind för snabb, typsäker utveckling",
   },
   {
     icon: Zap,
-    title: "Performance First",
-    description: "Optimized builds, lazy loading, and lightning-fast experiences",
+    title: "Prestanda Först",
+    description: "Optimerade byggen, lazy loading och blixtsnabba upplevelser",
   },
   {
     icon: Target,
-    title: "Pixel Perfect",
-    description: "Attention to detail with clean, maintainable code",
+    title: "Pixelperfekt",
+    description: "Uppmärksamhet på detaljer med ren, underhållbar kod",
   },
 ];
 
@@ -40,10 +40,10 @@ export default function About() {
     >
       <div className="section-container">
         <h2 className="font-press-start-2p text-2xl md:text-4xl text-accentNeon mb-4 text-center">
-          About
+          Om Mig
         </h2>
         <p className="text-textSecondary text-center mb-12 max-w-2xl mx-auto">
-          Building modern web experiences with precision
+          Bygger moderna webbupplevelser med precision
         </p>
 
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -97,7 +97,7 @@ export default function About() {
               {/* Skills */}
               <div className="mb-8">
                 <h3 className="font-press-start-2p text-sm text-accentMagenta mb-4">
-                  Tech Stack
+                  Teknikstack
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {skills.map((skill) => (
@@ -117,13 +117,13 @@ export default function About() {
                   href="#contact"
                   className="inline-block px-6 py-3 bg-accentNeon text-darkBg font-press-start-2p text-xs hover:bg-accentMagenta hover:text-white transition-colors duration-300 focus:outline-none focus:ring-4 focus:ring-accentNeon/50"
                 >
-                  Get in Touch
+                  Kontakta Mig
                 </a>
                 <a
                   href="#contact"
                   className="inline-block px-6 py-3 border-2 border-accentNeon text-accentNeon font-press-start-2p text-xs hover:bg-accentNeon hover:text-darkBg transition-colors duration-300 focus:outline-none focus:ring-4 focus:ring-accentNeon/50"
                 >
-                  View CV
+                  Se CV
                 </a>
               </div>
             </div>

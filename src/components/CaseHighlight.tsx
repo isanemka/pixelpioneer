@@ -3,16 +3,16 @@
 import Image from "next/image";
 
 const caseStudy = {
-  title: "Streamlined E-commerce Experience",
+  title: "Strömlinjeformad E-handelsupplevelse",
   image: "/images/rocket_with_stars.png",
-  imageAlt: "E-commerce case study visualization",
-  problem: "Complex checkout process caused 65% cart abandonment",
-  solution: "Redesigned single-page checkout with real-time validation",
-  result: "42% increase in conversions, 3.2s faster checkout",
+  imageAlt: "E-handelsfallstudie visualisering",
+  problem: "Komplext kassaflöde orsakade 65% kundvagnsavhopp",
+  solution: "Omdesignad enkelsideskassa med realtidsvalidering",
+  result: "42% ökning i konverteringar, 3,2s snabbare kassa",
   metrics: [
-    { label: "Conversion", value: "+42%" },
-    { label: "Speed", value: "3.2s faster" },
-    { label: "Satisfaction", value: "4.8/5" },
+    { label: "Konvertering", value: "+42%" },
+    { label: "Hastighet", value: "3.2s snabbare" },
+    { label: "Nöjdhet", value: "4.8/5" },
   ],
 };
 
@@ -21,10 +21,10 @@ export default function CaseHighlight() {
     <section className="spacing-section bg-darkGray">
       <div className="section-container">
         <h2 className="font-press-start-2p text-2xl md:text-4xl text-accentMagenta mb-4 text-center">
-          Case Highlight
+          Fallstudie
         </h2>
         <p className="text-textSecondary text-center mb-12 max-w-2xl mx-auto">
-          Deep dive into a recent success story
+          Djupdykning i en nylig framgångshistoria
         </p>
 
         <div className="max-w-5xl mx-auto">
@@ -58,7 +58,7 @@ export default function CaseHighlight() {
 
             <div className="bg-darkBg p-6 border-2 border-mediumGray">
               <h4 className="font-press-start-2p text-sm text-accentNeon mb-4">
-                Solution
+                Lösning
               </h4>
               <p className="text-textPrimary leading-relaxed">
                 {caseStudy.solution}
@@ -67,7 +67,7 @@ export default function CaseHighlight() {
 
             <div className="bg-darkBg p-6 border-2 border-mediumGray">
               <h4 className="font-press-start-2p text-sm text-accentMagenta mb-4">
-                Result
+                Resultat
               </h4>
               <p className="text-textPrimary leading-relaxed">
                 {caseStudy.result}
@@ -96,7 +96,7 @@ export default function CaseHighlight() {
               href="#contact"
               className="inline-block px-8 py-4 bg-accentMagenta text-textPrimary font-press-start-2p text-sm hover:bg-accentNeon hover:text-darkBg transition-colors duration-300 focus:outline-none focus:ring-4 focus:ring-accentMagenta/50"
             >
-              View Full Case
+              Se Hela Fallet
             </a>
           </div>
         </div>

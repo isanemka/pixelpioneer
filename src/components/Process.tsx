@@ -5,23 +5,23 @@ import { Search, Palette, Zap, Rocket } from "lucide-react";
 const processSteps = [
   {
     icon: Search,
-    title: "Discover",
-    description: "Research user needs and define clear goals",
+    title: "Upptäck",
+    description: "Utforska användarbehov och definiera tydliga mål",
   },
   {
     icon: Palette,
     title: "Design",
-    description: "Create intuitive, pixel-perfect interfaces",
+    description: "Skapa intuitiva, pixelperfekta gränssnitt",
   },
   {
     icon: Zap,
-    title: "Build",
-    description: "Develop fast, accessible web experiences",
+    title: "Bygg",
+    description: "Utveckla snabba, tillgängliga webbupplevelser",
   },
   {
     icon: Rocket,
-    title: "Ship",
-    description: "Launch and optimize for maximum impact",
+    title: "Lansera",
+    description: "Publicera och optimera för maximal påverkan",
   },
 ];
 
@@ -33,7 +33,7 @@ export default function Process() {
           Process
         </h2>
         <p className="text-textSecondary text-center mb-12 max-w-2xl mx-auto">
-          A streamlined approach to deliver quality results
+          En strömlinjeformad approach för att leverera kvalitetsresultat
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
