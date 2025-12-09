@@ -145,16 +145,19 @@ export default function SpaceScene() {
     }
   }, []);
 
-  // Create asteroids - using a ref to hold the function for self-reference
-  const createAsteroidRef = useRef<() => void>(() => {});
-  
-  const createAsteroid = useCallback(() => {
-    const createAsteroidInternal = () => {
+  // Create asteroids with recursive spawning - use ref to avoid immutability issues
+  const asteroidSpawnerRef = useRef<() => void>();
+
+  useEffect(() => {
+    asteroidSpawnerRef.current = () => {
       if (isSpawningAsteroidRef.current) return;
       isSpawningAsteroidRef.current = true;
 
       const scene = sceneRef.current;
-      if (!scene) return;
+      if (!scene) {
+        isSpawningAsteroidRef.current = false;
+        return;
+      }
 
       const containerWidth = scene.clientWidth;
       const asteroid = document.createElement("div");
@@ -183,14 +186,18 @@ export default function SpaceScene() {
         asteroid.remove();
       }, duration * 1000);
 
+      // Schedule next asteroid spawn
       const nextSpawn = Math.random() * 5000 + 3000;
       asteroidTimeoutRef.current = setTimeout(() => {
         isSpawningAsteroidRef.current = false;
-        createAsteroidRef.current();
+        // Recursively spawn next asteroid
+        asteroidSpawnerRef.current?.();
       }, nextSpawn);
     };
-    
-    createAsteroidInternal();
+  }, []);
+
+  const createAsteroid = useCallback(() => {
+    asteroidSpawnerRef.current?.();
   }, []);
 
   useEffect(() => {
@@ -199,9 +206,6 @@ export default function SpaceScene() {
     ).matches;
 
     createStars();
-    
-    // Store the createAsteroid function in the ref for recursive calls
-    createAsteroidRef.current = createAsteroid;
 
     if (!prefersReducedMotion) {
       createAsteroid();
