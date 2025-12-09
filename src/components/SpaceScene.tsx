@@ -219,6 +219,17 @@ export default function SpaceScene() {
           <br />
           Pioneer
         </h1>
+        <p className="text-accentNeon text-lg md:text-xl mt-6 font-body max-w-2xl mx-auto px-4">
+          Modern pixel experiences with a sharp, minimal edge.
+        </p>
+        <div className="mt-8">
+          <a
+            href="#projects"
+            className="inline-block px-8 py-4 bg-accentNeon text-darkBg font-press-start-2p text-sm hover:bg-accentMagenta hover:text-white transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-accentNeon/50"
+          >
+            View Projects
+          </a>
+        </div>
       </div>
       <div className="stars" ref={starsContainerRef}></div>
       <div className="rocket"></div>
@@ -227,6 +238,25 @@ export default function SpaceScene() {
       <div className="custom-cursor" ref={customCursorRef}>
         <div className="cursor-center"></div>
         <div className="cursor-ring"></div>
+      </div>
+      
+      {/* Scroll Cue Arrow */}
+      <div className="scroll-cue">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="text-accentNeon"
+        >
+          <path
+            d="M12 4L12 20M12 20L6 14M12 20L18 14"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="square"
+          />
+        </svg>
       </div>
     </div>
   );

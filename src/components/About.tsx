@@ -1,200 +1,134 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import {
-  Globe,
-  Search,
-  ShieldCheck,
-  Gauge,
-  Zap,
-  Wrench,
-  LucideIcon,
-} from "lucide-react";
+import Image from "next/image";
+import { Code2, Zap, Target } from "lucide-react";
 
-interface Service {
-  name: string;
-  value: string;
-  includes: string;
-  icon: LucideIcon;
-}
+const skills = [
+  "React",
+  "Next.js",
+  "TypeScript",
+  "Tailwind CSS",
+  "Node.js",
+  "UI/UX Design",
+  "Performance",
+  "Accessibility",
+];
 
-const services: Service[] = [
+const strengths = [
   {
-    name: "Ny hemsida som ger fler kunder",
-    value: "Tydlig väg till kontakt",
-    includes: "Design, texter, bilder, kontaktknappar och projektformulär",
-    icon: Globe,
+    icon: Code2,
+    title: "Modern Stack",
+    description: "Next.js, TypeScript, Tailwind for fast, type-safe development",
   },
   {
-    name: "Bokning och formulär",
-    value: "Färre mail fram och tillbaka",
-    includes: "Smidigt bokningsflöde med bekräftelser och notifieringar",
     icon: Zap,
+    title: "Performance First",
+    description: "Optimized builds, lazy loading, and lightning-fast experiences",
   },
   {
-    name: "Bli hittad på Google och i AI-svar",
-    value: "Rätt kunder hittar dig där de söker",
-    includes: "SEO-optimering som både Google och AI älskar",
-    icon: Search,
-  },
-  {
-    name: "Snabbare hemsida",
-    value: "Kortare väntetid, fler avslut",
-    includes: "Snabb laddning och optimerade bilder",
-    icon: Gauge,
-  },
-  {
-    name: "Skötsel och säkerhet",
-    value: "Trygg drift i vardagen",
-    includes: "Uppdateringar, backup och hjälp när du behöver",
-    icon: ShieldCheck,
-  },
-  {
-    name: "Automatiseringar som spar tid",
-    value: "Mindre manuellt arbete",
-    includes: "Skapa automatiserade flöden som sparar tid",
-    icon: Wrench,
+    icon: Target,
+    title: "Pixel Perfect",
+    description: "Attention to detail with clean, maintainable code",
   },
 ];
 
-const fullText = `
-Jag bygger snabba och tydliga webbsidor som gör jobbet:
-• Fokus på ditt mål: fler förfrågningar och bokningar
-• Enkelt i vardagen – jag finns kvar efter lansering
-• Snabb laddning och bättre synlighet i Google och AI-svar
-`.trim();
-
 export default function About() {
-  const [displayedText, setDisplayedText] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-  const [showServices, setShowServices] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout | undefined>(undefined);
-
-  const stopTyping = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = undefined;
-    }
-    setIsTyping(false);
-  };
-
-  const skipTyping = () => {
-    stopTyping();
-    setDisplayedText(fullText);
-    setShowServices(true);
-  };
-
-  const startTyping = () => {
-    const reduce =
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (reduce) {
-      skipTyping();
-      return;
-    }
-
-    setIsTyping(true);
-    let i = 0;
-    const speed = 26;
-
-    timerRef.current = setInterval(() => {
-      setDisplayedText(fullText.slice(0, i++));
-      if (i > fullText.length) {
-        stopTyping();
-        setTimeout(() => setShowServices(true), 300);
-      }
-    }, speed);
-  };
-
-  useEffect(() => {
-    const timeout = setTimeout(startTyping, 300);
-    return () => {
-      clearTimeout(timeout);
-      stopTyping();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <section
-      id="services"
-      className="w-full bg-black font-vt323 px-6 py-12 text-left"
+      id="about"
+      className="spacing-section bg-darkGray"
     >
-      <div className="max-w-4xl mx-auto text-limegreen border-2 border-limegreen shadow-limegreen p-4 rounded-md">
-        {/* Typing text effect */}
-        <p
-          className="text-lg md:text-xl leading-relaxed"
-          role="status"
-          aria-live="polite"
-          aria-busy={isTyping ? "true" : "false"}
-        >
-          <span className="select-none">&gt; </span>
-          {isTyping && (
-            <span className="sr-only">Skriver introduktion...</span>
-          )}
-          <span className="whitespace-pre-line">{displayedText}</span>
-          <span className="cursor" aria-hidden="true">
-            █
-          </span>
+      <div className="section-container">
+        <h2 className="font-press-start-2p text-2xl md:text-4xl text-accentNeon mb-4 text-center">
+          About
+        </h2>
+        <p className="text-textSecondary text-center mb-12 max-w-2xl mx-auto">
+          Building modern web experiences with precision
         </p>
 
-        {/* Controls */}
-        <div className="mt-3 flex items-center gap-4">
-          {isTyping && (
-            <button
-              onClick={skipTyping}
-              className="text-sm md:text-base text-black bg-limegreen/90 hover:bg-limegreen px-3 py-1 rounded transition"
-            >
-              Visa hela texten
-            </button>
-          )}
-          <a
-            href="#contact"
-            className="text-sm md:text-base underline text-cyan-300 hover:text-cyan-200"
-          >
-            Få kostnadsfri offert
-          </a>
-        </div>
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          {/* Portrait/Silhouette */}
+          <div className="order-2 md:order-1">
+            <div className="relative aspect-square max-w-md mx-auto border-4 border-accentNeon bg-darkBg overflow-hidden">
+              <Image
+                src="/images/logo-white.png"
+                alt="PixelPioneer avatar"
+                fill
+                className="object-contain p-8"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+              <div className="pixel-corner-tl text-accentNeon absolute" />
+              <div className="pixel-corner-tr text-accentNeon absolute" />
+              <div className="pixel-corner-bl text-accentNeon absolute" />
+              <div className="pixel-corner-br text-accentNeon absolute" />
+            </div>
+          </div>
 
-        {/* Services */}
-        {showServices && (
-          <div className="fade-in">
-            <h3 className="mt-8 text-2xl md:text-3xl text-orange-400 underline">
-              Tjänster
-            </h3>
-            <p className="text-lg md:text-xl text-gray-300 mt-2">
-              Implementeringar som ger snabb effekt – allt kan kombineras och
-              växa med ditt företag.
-            </p>
+          {/* Bio and Details */}
+          <div className="order-1 md:order-2">
+            <div className="prose prose-invert max-w-none">
+              <p className="text-textPrimary text-lg leading-relaxed mb-6">
+                Jag bygger snabba och tydliga webbsidor som gör jobbet. Fokus på ditt mål: fler förfrågningar och bokningar.
+              </p>
 
-            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-              {services.map((svc, i) => {
-                const Icon = svc.icon;
-                return (
-                  <article
-                    key={i}
-                    className="border border-lime-400/70 rounded p-3 md:p-4 bg-gray-900/50 hover:bg-gray-900 transition"
-                  >
-                    <div className="flex items-start gap-3">
-                      <Icon className="text-cyan-300" size={22} />
+              {/* Strengths */}
+              <div className="space-y-4 mb-8">
+                {strengths.map((strength) => {
+                  const Icon = strength.icon;
+                  return (
+                    <div
+                      key={strength.title}
+                      className="flex items-start gap-4 bg-mediumGray p-4 border border-accentNeon/30"
+                    >
+                      <Icon className="text-accentNeon flex-shrink-0 mt-1" size={24} />
                       <div>
-                        <h4 className="text-cyan-400 text-xl">{svc.name}</h4>
-                        <p className="text-limegreen text-base md:text-lg">
-                          {svc.value}
-                        </p>
-                        <p className="text-gray-400 text-base md:text-lg mt-1">
-                          {svc.includes}
+                        <h3 className="font-press-start-2p text-sm text-accentNeon mb-2">
+                          {strength.title}
+                        </h3>
+                        <p className="text-textSecondary text-sm">
+                          {strength.description}
                         </p>
                       </div>
                     </div>
-                  </article>
-                );
-              })}
+                  );
+                })}
+              </div>
+
+              {/* Skills */}
+              <div className="mb-8">
+                <h3 className="font-press-start-2p text-sm text-accentMagenta mb-4">
+                  Tech Stack
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-2 bg-darkBg border border-accentNeon text-accentNeon font-vt323 text-lg"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Links */}
+              <div className="flex gap-4">
+                <a
+                  href="#contact"
+                  className="inline-block px-6 py-3 bg-accentNeon text-darkBg font-press-start-2p text-xs hover:bg-accentMagenta hover:text-white transition-colors duration-300 focus:outline-none focus:ring-4 focus:ring-accentNeon/50"
+                >
+                  Get in Touch
+                </a>
+                <a
+                  href="#contact"
+                  className="inline-block px-6 py-3 border-2 border-accentNeon text-accentNeon font-press-start-2p text-xs hover:bg-accentNeon hover:text-darkBg transition-colors duration-300 focus:outline-none focus:ring-4 focus:ring-accentNeon/50"
+                >
+                  View CV
+                </a>
+              </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </section>
   );
