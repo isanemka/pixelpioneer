@@ -1,42 +1,27 @@
 import type { Metadata } from "next";
-import { Press_Start_2P, VT323 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
-const pressStart2P = Press_Start_2P({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-press-start-2p",
-  display: "swap",
-});
-
-const vt323 = VT323({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-vt323",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "PixelPioneer – Webbutveckling för småföretag",
+  title: "PixelPioneer – Modern Web Development",
   description:
-    "PixelPioneer hjälper småföretag att växa online med snabba, säkra och affärsdrivande webblösningar. Boka kostnadsfri konsultation.",
-  keywords: ["webbutveckling", "hemsida", "småföretag", "SEO", "webbdesign"],
+    "Modern pixel experiences with a sharp, minimal edge. Fast, accessible web solutions built with precision.",
+  keywords: ["webbutveckling", "hemsida", "småföretag", "SEO", "webbdesign", "web development", "pixel art"],
   authors: [{ name: "PixelPioneer" }],
   robots: "index,follow",
   openGraph: {
     type: "website",
-    title: "PixelPioneer – Webbutveckling för småföretag",
+    title: "PixelPioneer – Modern Web Development",
     description:
-      "Snabba, säkra och affärsdrivande webblösningar som ger fler kunder. Kostnadsfri konsultation.",
+      "Modern pixel experiences with a sharp, minimal edge. Fast, accessible web solutions.",
     images: ["/images/PixelAssistant.png"],
     locale: "sv_SE",
   },
   twitter: {
     card: "summary_large_image",
-    title: "PixelPioneer – Webbutveckling för småföretag",
+    title: "PixelPioneer – Modern Web Development",
     description:
-      "Snabba, säkra och affärsdrivande webblösningar som ger fler kunder.",
+      "Modern pixel experiences with a sharp, minimal edge.",
     images: ["/images/PixelAssistant.png"],
   },
   icons: {
@@ -51,9 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sv">
-      <body
-        className={`${pressStart2P.variable} ${vt323.variable} antialiased`}
-      >
+      <body className="antialiased">
         {children}
         <Analytics />
       </body>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 
 export default function SpaceScene() {
   const mouseTrailRef = useRef<HTMLDivElement>(null);
@@ -8,9 +8,11 @@ export default function SpaceScene() {
   const customCursorRef = useRef<HTMLDivElement>(null);
   const starsContainerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<HTMLDivElement>(null);
+  const rocketRef = useRef<HTMLDivElement>(null);
   const trailElementsRef = useRef<HTMLElement[]>([]);
   const asteroidTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isSpawningAsteroidRef = useRef(false);
+  const [parallaxY, setParallaxY] = useState(0);
 
   // Debounce utility
   const debounce = <T extends (...args: unknown[]) => void>(fn: T, delay = 200) => {
@@ -20,6 +22,31 @@ export default function SpaceScene() {
       t = setTimeout(() => fn(...args), delay);
     };
   };
+
+  // Parallax scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
+      
+      // Only apply parallax in the hero section
+      if (scrollY < viewportHeight) {
+        setParallaxY(scrollY * 0.5); // Slow parallax factor
+      }
+    };
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (!prefersReducedMotion) {
+      window.addEventListener("scroll", handleScroll, { passive: true });
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   // Mouse trail effect
   const createMouseTrail = useCallback((e: MouseEvent) => {
@@ -213,7 +240,12 @@ export default function SpaceScene() {
 
   return (
     <div className="space-scene" ref={sceneRef}>
-      <div className="title-container">
+      <div 
+        className="title-container"
+        style={{
+          transform: `translateY(${parallaxY}px)`,
+        }}
+      >
         <h1 className="title text-white font-press-start-2p">
           Pixel
           <br />
@@ -231,8 +263,20 @@ export default function SpaceScene() {
           </a>
         </div>
       </div>
-      <div className="stars" ref={starsContainerRef}></div>
-      <div className="rocket"></div>
+      <div 
+        className="stars" 
+        ref={starsContainerRef}
+        style={{
+          transform: `translateY(${parallaxY * 0.3}px)`,
+        }}
+      ></div>
+      <div 
+        className="rocket" 
+        ref={rocketRef}
+        style={{
+          transform: `translateX(-50%) translateY(${parallaxY * 0.2}px)`,
+        }}
+      ></div>
       <div className="mouse-trail" ref={mouseTrailRef}></div>
       <div className="mouse-glow" ref={mouseGlowRef}></div>
       <div className="custom-cursor" ref={customCursorRef}>
