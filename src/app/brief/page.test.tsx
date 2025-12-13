@@ -116,7 +116,7 @@ describe("BriefPage", () => {
     it("renders project type checkboxes", async () => {
       await goToStep2();
 
-      expect(screen.getByText("Ny hemsida")).toBeInTheDocument();
+      expect(screen.getByText("Företagswebbplats")).toBeInTheDocument();
       expect(screen.getByText("Redesign")).toBeInTheDocument();
       expect(screen.getByText("Landningssida")).toBeInTheDocument();
     });
@@ -124,15 +124,15 @@ describe("BriefPage", () => {
     it("allows selecting multiple project types", async () => {
       const user = await goToStep2();
 
-      const nyHemsida = screen.getByText("Ny hemsida");
+      const foretag = screen.getByText("Företagswebbplats");
       const redesign = screen.getByText("Redesign");
 
-      await user.click(nyHemsida);
+      await user.click(foretag);
       await user.click(redesign);
 
-      // Both should be selected (have the limegreen class)
-      expect(nyHemsida.closest("label")).toHaveClass("border-limegreen");
-      expect(redesign.closest("label")).toHaveClass("border-limegreen");
+      // Both should be selected (have the purple border class)
+      expect(foretag.closest("label")).toHaveClass("border-[#C026D3]");
+      expect(redesign.closest("label")).toHaveClass("border-[#C026D3]");
     });
 
     it("shows validation error without project description", async () => {

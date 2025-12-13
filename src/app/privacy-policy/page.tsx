@@ -8,38 +8,39 @@ export const metadata: Metadata = {
 
 export default function IntegritetspolicyPage() {
   return (
-    <main className="min-h-screen bg-[#0a0a1a] text-white py-16 px-4">
+    <main className="min-h-screen bg-slate-950 text-white py-16 px-4">
       <div className="max-w-3xl mx-auto">
         <Link
           href="/"
-          className="font-vt323 text-[#00ff88] hover:underline text-lg mb-8 inline-block"
+          className="text-[#C026D3] hover:text-[#E879F9] transition-colors text-lg mb-8 inline-block"
+          style={{ fontFamily: 'VT323, monospace' }}
         >
           ← Tillbaka till startsidan
         </Link>
 
-        <h1 className="font-press-start text-2xl sm:text-3xl text-[#00ff88] mb-8">
+        <h1 className="text-4xl sm:text-5xl text-[#C026D3] mb-8" style={{ fontFamily: 'Delta Block, sans-serif' }}>
           Integritetspolicy
         </h1>
 
-        <div className="font-vt323 text-lg sm:text-xl space-y-6 text-gray-300">
+        <div className="text-lg sm:text-xl space-y-6 text-gray-300" style={{ fontFamily: 'VT323, monospace' }}>
           <p>
             <strong className="text-white">Senast uppdaterad:</strong> 30
             november 2025
           </p>
 
           <section>
-            <h2 className="font-press-start text-sm text-[#00ff88] mb-3">
+            <h2 className="text-2xl text-[#7B2FD1] mb-3 font-bold" style={{ fontFamily: 'Delta Block, sans-serif' }}>
               Anonym statistik
             </h2>
             <p>
-              Vi använder Vercel Analytics för att samla in anonym statistik om
-              hur besökare använder vår webbplats. Detta hjälper oss att
+              Jag använder Vercel Analytics för att samla in anonym statistik om
+              hur besökare använder webbplatsen. Detta hjälper mig att
               förbättra användarupplevelsen.
             </p>
           </section>
 
           <section>
-            <h2 className="font-press-start text-sm text-[#00ff88] mb-3">
+            <h2 className="text-2xl text-[#7B2FD1] mb-3 font-bold" style={{ fontFamily: 'Delta Block, sans-serif' }}>
               Vad samlas in?
             </h2>
             <ul className="list-disc list-inside space-y-2">
@@ -51,7 +52,7 @@ export default function IntegritetspolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-press-start text-sm text-[#00ff88] mb-3">
+            <h2 className="text-2xl text-[#7B2FD1] mb-3 font-bold" style={{ fontFamily: 'Delta Block, sans-serif' }}>
               Vad samlas INTE in?
             </h2>
             <ul className="list-disc list-inside space-y-2">
@@ -62,26 +63,26 @@ export default function IntegritetspolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-press-start text-sm text-[#00ff88] mb-3">
+            <h2 className="text-2xl text-[#7B2FD1] mb-3 font-bold" style={{ fontFamily: 'Delta Block, sans-serif' }}>
               Kontaktformulär
             </h2>
             <p>
-              När du skickar in en projektförfrågan via vårt formulär sparas
+              När du skickar in en projektförfrågan via formuläret sparas
               dina uppgifter (namn, e-post, företag och projektdetaljer) för att
-              vi ska kunna kontakta dig. Vi delar aldrig dina uppgifter med
+              jag ska kunna kontakta dig. Jag delar aldrig dina uppgifter med
               tredje part.
             </p>
           </section>
 
           <section>
-            <h2 className="font-press-start text-sm text-[#00ff88] mb-3">
+            <h2 className="text-2xl text-[#7B2FD1] mb-3 font-bold" style={{ fontFamily: 'Delta Block, sans-serif' }}>
               Kontakt
             </h2>
             <p>
-              Har du frågor om hur vi hanterar data? Kontakta oss på{" "}
+              Har du frågor om hur jag hanterar data? Kontakta mig på{" "}
               <a
                 href="mailto:hej@pixelpioneer.se"
-                className="text-[#00ff88] hover:underline"
+                className="text-[#C026D3] hover:text-[#E879F9] transition-colors"
               >
                 hej@pixelpioneer.se
               </a>

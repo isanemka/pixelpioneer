@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="bg-darkbg text-white p-3">
+    <header className="header-overlay text-white px-4 py-3">
       <nav className="container mx-auto flex justify-between items-center">
         <Image
           src="/images/logo-white.png"
@@ -15,17 +15,17 @@ export default function Header() {
         />
         <ul className="flex space-x-4 text-lg md:text-2xl font-vt323">
           <li>
-            <a href="#services" className="hover:text-indigo-400">
+            <a href="#services" className="hover:text-cyan-300 transition-colors">
               Tjänster
             </a>
           </li>
           <li>
-            <a href="#approach" className="hover:text-indigo-400">
+            <a href="#approach" className="hover:text-cyan-300 transition-colors">
               Process &amp; Fördelar
             </a>
           </li>
           <li>
-            <a href="#contact" className="hover:text-indigo-400">
+            <a href="#contact" className="hover:text-cyan-300 transition-colors">
               Få Offert
             </a>
           </li>

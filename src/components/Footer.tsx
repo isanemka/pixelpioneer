@@ -9,12 +9,12 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-gradient-to-t from-black via-gray-900 to-black text-gray-300 text-center py-8 overflow-hidden">
+    <footer className="relative bg-linear-to-t from-black via-slate-900 to-slate-950 text-gray-300 text-center py-8 overflow-hidden border-t border-[#4F01A4]/20">
       {/* Links */}
-      <div className="flex justify-center gap-4 font-vt323 text-lg mb-4">
+      <div className="flex justify-center gap-4 text-lg mb-4" style={{ fontFamily: 'VT323, monospace' }}>
         <Link
-          href="/integritetspolicy"
-          className="text-gray-400 hover:text-[#00ff88] transition-colors"
+          href="/privacy-policy"
+          className="text-gray-400 hover:text-[#C026D3] transition-colors"
         >
           Integritetspolicy
         </Link>
@@ -22,14 +22,14 @@ export default function Footer() {
         <button
           type="button"
           onClick={resetCookieConsent}
-          className="text-gray-400 hover:text-[#00ff88] transition-colors"
+          className="text-gray-400 hover:text-[#C026D3] transition-colors"
         >
           Ändra cookie-val
         </button>
       </div>
       {/* Copyright & Branding */}
-      <p className="text-xl font-vt323 text-limegreen">
-        © {new Date().getFullYear()} PixelPioneer - Webbsidor som gör skillnad
+      <p className="text-xl text-[#7B2FD1]" style={{ fontFamily: 'VT323, monospace' }}>
+        © {new Date().getFullYear()} PixelPioneer - Från pixel till plattform
       </p>
     </footer>
   );

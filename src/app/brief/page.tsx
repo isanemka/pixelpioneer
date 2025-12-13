@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Send, CheckCircle, Rocket, Globe, Palette, Target, AlertCircle } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 interface FormData {
   // Contact details
@@ -36,11 +37,11 @@ const initialFormData: FormData = {
 const STORAGE_KEY = "pixelpioneer-brief-form";
 
 const projectTypes = [
-  "Ny hemsida",
-  "Uppdatering av befintlig sida",
-  "Redesign",
-  "Landningssida",
+  "Företagswebbplats",
+  "SaaS-plattform",
   "Portfolio",
+  "Landningssida",
+  "Redesign",
   "Annat",
 ];
 
@@ -181,101 +182,138 @@ export default function BriefPage() {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-gray-900 flex items-center justify-center px-4 py-8 font-vt323">
-        <div className="text-center max-w-sm w-full">
-          <div className="w-14 h-14 sm:w-16 sm:h-16 bg-limegreen rounded-full flex items-center justify-center mx-auto mb-4">
-            <CheckCircle size={28} className="text-gray-900 sm:w-8 sm:h-8" />
-          </div>
-          <h1 className="text-xl sm:text-2xl font-bold text-limegreen font-vt323 mb-3">
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4 py-8">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-sm w-full"
+        >
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            className="w-14 h-14 sm:w-16 sm:h-16 bg-[#C026D3] rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            <CheckCircle size={28} className="text-white sm:w-8 sm:h-8" />
+          </motion.div>
+          <h1 className="text-xl sm:text-2xl font-bold text-[#C026D3] mb-3" style={{ fontFamily: 'Delta Block, sans-serif' }}>
             Tack för din förfrågan!
           </h1>
-          <p className="text-gray-300 text-sm sm:text-base mb-4">
+          <p className="text-gray-300 text-sm sm:text-base mb-4" style={{ fontFamily: 'VT323, monospace' }}>
             Jag har tagit emot din förfrågan och återkommer inom 48 timmar. Kolla din e-post för en bekräftelse!
           </p>
-          <p className="text-gray-400 text-sm sm:text-base mb-6">
+          <p className="text-gray-400 text-sm sm:text-base mb-6" style={{ fontFamily: 'VT323, monospace' }}>
             Har du frågor? Kontakta mig på{" "}
-            <a href="mailto:hej@pixelpioneer.se" className="text-cyan-400 underline">
+            <a href="mailto:hej@pixelpioneer.se" className="text-[#7B2FD1] underline hover:text-[#C026D3]">
               hej@pixelpioneer.se
             </a>
           </p>
           <Link
             href="/"
-            className="inline-block bg-limegreen text-black font-bold px-5 py-2.5 text-sm sm:text-base rounded-lg hover:bg-cyan-400 transition-colors"
+            className="inline-block bg-gradient-to-r from-[#4F01A4] to-[#7B2FD1] text-white font-bold px-5 py-2.5 text-sm sm:text-base rounded-lg hover:shadow-lg hover:shadow-[#4F01A4]/50 transition-shadow"
+            style={{ fontFamily: 'Delta Block, sans-serif' }}
           >
             Tillbaka till startsidan
           </Link>
-        </div>
+        </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-gray-900 py-6 sm:py-8 md:py-12 px-4 sm:px-6 font-vt323">
+    <div className="min-h-screen bg-slate-950 py-6 sm:py-8 md:py-12 px-4 sm:px-6" style={{ fontFamily: 'VT323, monospace' }}>
       <div className="max-w-2xl mx-auto w-full">
         {/* Header */}
-        <div className="text-center mb-5 sm:mb-8">
-          <Link href="/" className="inline-block mb-2 sm:mb-4">
-            <Rocket size={28} className="text-limegreen mx-auto sm:w-8 sm:h-8" />
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-5 sm:mb-8"
+        >
+          <Link href="/" className="inline-block mb-2 sm:mb-4 group">
+            <Rocket size={28} className="text-[#C026D3] mx-auto sm:w-8 sm:h-8 group-hover:scale-110 transition-transform" />
           </Link>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-limegreen font-vt323 mb-1.5 sm:mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#C026D3] mb-1.5 sm:mb-2" style={{ fontFamily: 'Delta Block, sans-serif' }}>
             Offertförfrågan
           </h1>
           <p className="text-gray-400 text-sm sm:text-base max-w-xs mx-auto">
             Tar 2 min – jag hör av mig inom 48h
           </p>
-        </div>
+        </motion.div>
 
         {/* Progress bar */}
-        <div className="mb-4">
-          <div className="flex justify-between text-xs sm:text-sm text-gray-500 mb-1">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+          className="mb-4"
+        >
+          <div className="flex justify-between text-sm sm:text-base text-gray-500 mb-1">
             <span>Steg {currentStep}/{totalSteps}</span>
             <span>{Math.round((currentStep / totalSteps) * 100)}%</span>
           </div>
-          <div className="h-1 bg-gray-700 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-limegreen to-cyan-400 transition-all duration-300"
-              style={{ width: `${(currentStep / totalSteps) * 100}%` }}
+          <div className="h-1 bg-slate-800 rounded-full overflow-hidden">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${(currentStep / totalSteps) * 100}%` }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="h-full bg-linear-to-r from-[#7B2FD1] to-[#C026D3]"
             />
           </div>
-        </div>
+        </motion.div>
 
         {/* Validation errors */}
         {validationErrors.length > 0 && (
-          <div className="bg-red-900/30 border border-red-500/50 rounded-lg p-3 flex items-start gap-2 mb-4">
-            <AlertCircle className="text-red-400 shrink-0 mt-0.5" size={16} />
-            <ul className="text-red-300 text-sm space-y-0.5">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-red-900/30 border border-red-500/50 rounded-lg p-3 flex items-start gap-2 mb-4"
+          >
+            <AlertCircle className="text-red-400 shrink-0 mt-0.5" size={18} />
+            <ul className="text-red-300 text-base space-y-0.5">
               {validationErrors.map((error, index) => (
                 <li key={index}>• {error}</li>
               ))}
             </ul>
-          </div>
+          </motion.div>
         )}
 
         {/* Submit error */}
         {submitError && (
-          <div className="bg-red-900/30 border border-red-500/50 rounded-lg p-3 flex items-start gap-2 mb-4">
-            <AlertCircle className="text-red-400 shrink-0 mt-0.5" size={16} />
-            <p className="text-red-300 text-sm">{submitError}</p>
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-red-900/30 border border-red-500/50 rounded-lg p-3 flex items-start gap-2 mb-4"
+          >
+            <AlertCircle className="text-red-400 shrink-0 mt-0.5" size={18} />
+            <p className="text-red-300 text-base">{submitError}</p>
+          </motion.div>
         )}
 
         {/* Form */}
         <form onSubmit={(e) => e.preventDefault()} className="space-y-4 sm:space-y-6">
           {/* Step 1: Contact details */}
           {currentStep === 1 && (
-            <div className="bg-gray-800/50 border border-limegreen/30 rounded-xl p-4 sm:p-5">
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-slate-900/70 backdrop-blur-sm border border-[#4F01A4]/30 hover:border-[#7B2FD1]/50 transition-colors rounded-xl p-4 sm:p-5"
+            >
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 bg-limegreen/20 rounded-full flex items-center justify-center shrink-0">
-                  <Target size={14} className="text-limegreen" />
+                <div className="w-7 h-7 bg-[#C026D3]/20 rounded-full flex items-center justify-center shrink-0">
+                  <Target size={14} className="text-[#C026D3]" />
                 </div>
-                <h2 className="text-base sm:text-lg font-bold text-cyan-400 font-vt323">
+                <h2 className="text-lg sm:text-xl font-bold text-[#7B2FD1]" style={{ fontFamily: 'Delta Block, sans-serif' }}>
                   Kontaktuppgifter
                 </h2>
               </div>
               
               <div className="space-y-3">
                 <div>
-                  <label className="block text-gray-300 text-sm mb-1">
+                  <label className="block text-gray-300 text-base mb-1">
                     Namn <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -284,12 +322,12 @@ export default function BriefPage() {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none"
+                    className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-3 text-lg text-white focus:border-[#C026D3] focus:outline-none focus:ring-2 focus:ring-[#C026D3]/20 transition-all"
                     placeholder="Ditt namn"
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-300 text-sm mb-1">
+                  <label className="block text-gray-300 text-base mb-1">
                     E-post <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -298,58 +336,64 @@ export default function BriefPage() {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none"
+                    className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-3 text-lg text-white focus:border-[#C026D3] focus:outline-none focus:ring-2 focus:ring-[#C026D3]/20 transition-all"
                     placeholder="din@epost.se"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-gray-300 text-sm mb-1">Företag</label>
+                    <label className="block text-gray-300 text-base mb-1">Företag</label>
                     <input
                       type="text"
                       name="company"
                       value={formData.company}
                       onChange={handleInputChange}
-                      className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none"
+                      className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-3 text-lg text-white focus:border-[#C026D3] focus:outline-none focus:ring-2 focus:ring-[#C026D3]/20 transition-all"
                       placeholder="Valfritt"
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-300 text-sm mb-1">Telefon</label>
+                    <label className="block text-gray-300 text-base mb-1">Telefon</label>
                     <input
                       type="tel"
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none"
+                      className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-3 text-lg text-white focus:border-[#C026D3] focus:outline-none focus:ring-2 focus:ring-[#C026D3]/20 transition-all"
                       placeholder="Valfritt"
                     />
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           )}
 
           {/* Step 2: About the project */}
           {currentStep === 2 && (
-            <div className="bg-gray-800/50 border border-limegreen/30 rounded-xl p-4 sm:p-5">
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-slate-900/70 backdrop-blur-sm border border-[#4F01A4]/30 hover:border-[#7B2FD1]/50 transition-colors rounded-xl p-4 sm:p-5"
+            >
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 bg-limegreen/20 rounded-full flex items-center justify-center shrink-0">
-                  <Globe size={14} className="text-limegreen" />
+                <div className="w-7 h-7 bg-[#C026D3]/20 rounded-full flex items-center justify-center shrink-0">
+                  <Globe size={14} className="text-[#C026D3]" />
                 </div>
-                <h2 className="text-base sm:text-lg font-bold text-cyan-400 font-vt323">
+                <h2 className="text-lg sm:text-xl font-bold text-[#7B2FD1]" style={{ fontFamily: 'Delta Block, sans-serif' }}>
                   Ditt projekt
                 </h2>
               </div>
 
               <div className="space-y-3">
                 <div>
-                  <label className="block text-gray-300 text-sm mb-2">Typ av projekt</label>
+                  <label className="block text-gray-300 text-base mb-2">Typ av projekt</label>
                   <div className="grid grid-cols-2 gap-2">
                     {projectTypes.map((type) => (
                       <label
                         key={type}
-                        className={`flex items-center justify-center py-2.5 px-2 rounded-lg border cursor-pointer transition-colors text-center ${formData.projectType.includes(type) ? "bg-limegreen/20 border-limegreen text-limegreen" : "bg-gray-700 border-gray-600 text-gray-300"}`}
+                        className={`flex items-center justify-center py-2.5 px-2 rounded-lg border cursor-pointer transition-all text-center ${formData.projectType.includes(type) ? "bg-[#C026D3]/20 border-[#C026D3] text-[#C026D3]" : "bg-slate-800/50 border-slate-700 text-gray-300 hover:border-[#7B2FD1]/30"}`}
                       >
                         <input
                           type="checkbox"
@@ -357,14 +401,14 @@ export default function BriefPage() {
                           onChange={() => handleCheckboxChange("projectType", type)}
                           className="sr-only"
                         />
-                        <span className="text-sm">{type}</span>
+                        <span className="text-base">{type}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-sm mb-1">
+                  <label className="block text-gray-300 text-base mb-1">
                     Beskriv projektet <span className="text-red-400">*</span>
                   </label>
                   <textarea
@@ -373,52 +417,58 @@ export default function BriefPage() {
                     onChange={handleInputChange}
                     required
                     rows={3}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none resize-none"
+                    className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-3 text-lg text-white focus:border-[#C026D3] focus:outline-none focus:ring-2 focus:ring-[#C026D3]/20 transition-all resize-none"
                     placeholder="Vad behöver du hjälp med?"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-sm mb-1">Deadline</label>
+                  <label className="block text-gray-300 text-base mb-1">Deadline</label>
                   <input
                     type="text"
                     name="deadline"
                     value={formData.deadline}
                     onChange={handleInputChange}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none"
+                    className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-3 text-lg text-white focus:border-[#C026D3] focus:outline-none focus:ring-2 focus:ring-[#C026D3]/20 transition-all"
                     placeholder="T.ex. inom 2 månader"
                   />
                 </div>
               </div>
-            </div>
+            </motion.div>
           )}
           {/* Step 3: Design style */}
           {currentStep === 3 && (
-            <div className="bg-gray-800/50 border border-limegreen/30 rounded-xl p-4 sm:p-5">
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-slate-900/70 backdrop-blur-sm border border-[#4F01A4]/30 hover:border-[#7B2FD1]/50 transition-colors rounded-xl p-4 sm:p-5"
+            >
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 bg-limegreen/20 rounded-full flex items-center justify-center shrink-0">
-                  <Palette size={14} className="text-limegreen" />
+                <div className="w-7 h-7 bg-[#C026D3]/20 rounded-full flex items-center justify-center shrink-0">
+                  <Palette size={14} className="text-[#C026D3]" />
                 </div>
-                <h2 className="text-base sm:text-lg font-bold text-cyan-400 font-vt323">
+                <h2 className="text-lg sm:text-xl font-bold text-[#7B2FD1]" style={{ fontFamily: 'Delta Block, sans-serif' }}>
                   Vilken känsla?
                 </h2>
               </div>
 
               <div className="space-y-3">
                 <div>
-                  <label className="block text-gray-300 text-sm mb-1">Önskad stil/känsla</label>
+                  <label className="block text-gray-300 text-base mb-1">Önskad stil/känsla</label>
                   <input
                     type="text"
                     name="designStyle"
                     value={formData.designStyle}
                     onChange={handleInputChange}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none"
+                    className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-3 text-lg text-white focus:border-[#C026D3] focus:outline-none focus:ring-2 focus:ring-[#C026D3]/20 transition-all"
                     placeholder="Modern, minimalistisk, lekfull..."
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-sm mb-1">
+                  <label className="block text-gray-300 text-base mb-1">
                     Inspiration (valfritt)
                   </label>
                   <textarea
@@ -426,53 +476,61 @@ export default function BriefPage() {
                     value={formData.inspirationSites}
                     onChange={handleInputChange}
                     rows={2}
-                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-3 text-base text-white focus:border-limegreen focus:outline-none resize-none"
+                    className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-3 text-lg text-white focus:border-[#C026D3] focus:outline-none focus:ring-2 focus:ring-[#C026D3]/20 transition-all resize-none"
                     placeholder="Länka till hemsidor du gillar..."
                   />
                 </div>
 
-                <div className="bg-gray-700/40 rounded-lg p-3">
-                  <p className="text-gray-300 text-sm">
+                <div className="bg-[#4F01A4]/10 border border-[#7B2FD1]/20 rounded-lg p-3">
+                  <p className="text-gray-300 text-base">
                     <strong>Osäker?</strong> Vi går igenom allt på mötet.
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           )}
 
           {/* Navigation */}
           <div className="flex justify-between items-center pt-2">
             {currentStep > 1 ? (
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 type="button"
                 onClick={prevStep}
-                className="px-3 py-2 text-sm text-gray-400 hover:text-white transition-colors"
+                className="px-3 py-2 text-base text-gray-400 hover:text-[#C026D3] transition-colors"
               >
                 ← Tillbaka
-              </button>
+              </motion.button>
             ) : (
               <Link
                 href="/"
-                className="px-3 py-2 text-sm text-gray-400 hover:text-white transition-colors"
+                className="px-3 py-2 text-base text-gray-400 hover:text-[#C026D3] transition-colors"
               >
                 ← Avbryt
               </Link>
             )}
 
             {currentStep < totalSteps ? (
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 type="button"
                 onClick={nextStep}
-                className="bg-gradient-to-r from-limegreen to-cyan-400 text-black font-bold px-6 py-2.5 text-sm rounded-lg hover:from-cyan-400 hover:to-limegreen transition-all"
+                className="bg-linear-to-r from-[#4F01A4] to-[#7B2FD1] text-white font-bold px-6 py-2.5 text-sm rounded-lg hover:shadow-lg hover:shadow-[#4F01A4]/50 transition-all"
+                style={{ fontFamily: 'Delta Block, sans-serif' }}
               >
                 Nästa →
-              </button>
+              </motion.button>
             ) : (
-              <button
+              <motion.button
+                whileHover={{ scale: canSubmit() && !isSubmitting ? 1.05 : 1 }}
+                whileTap={{ scale: canSubmit() && !isSubmitting ? 0.95 : 1 }}
                 type="button"
                 onClick={handleSubmit}
                 disabled={isSubmitting || !canSubmit()}
-                className={`bg-gradient-to-r from-limegreen to-cyan-400 text-black font-bold px-5 py-2.5 text-sm rounded-lg transition-all flex items-center gap-1.5 ${isSubmitting || !canSubmit() ? "opacity-50 cursor-not-allowed" : "hover:from-cyan-400 hover:to-limegreen"}`}
+                className={`bg-linear-to-r from-[#4F01A4] to-[#7B2FD1] text-white font-bold px-5 py-2.5 text-sm rounded-lg transition-all flex items-center gap-1.5 ${isSubmitting || !canSubmit() ? "opacity-50 cursor-not-allowed" : "hover:shadow-lg hover:shadow-[#4F01A4]/50"}`}
+                style={{ fontFamily: 'Delta Block, sans-serif' }}
               >
                 {isSubmitting ? (
                   "Skickar..."
@@ -482,13 +540,13 @@ export default function BriefPage() {
                     Skicka
                   </>
                 )}
-              </button>
+              </motion.button>
             )}
           </div>
         </form>
 
         {/* Footer */}
-        <p className="text-center text-gray-500 text-xs mt-5">
+        <p className="text-center text-gray-500 text-sm mt-5">
           Genom att skicka godkänner du att jag sparar dina uppgifter för att kunna återkomma med en offert.
         </p>
       </div>

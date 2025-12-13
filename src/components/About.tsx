@@ -120,7 +120,7 @@ export default function About() {
   return (
     <section
       id="services"
-      className="w-full bg-black font-vt323 px-6 py-12 text-left"
+      className="w-full bg-black font-vt323 px-6 py-12 text-left scroll-mt-24"
     >
       <div className="max-w-4xl mx-auto text-limegreen border-2 border-limegreen shadow-limegreen p-4 rounded-md">
         {/* Typing text effect */}
