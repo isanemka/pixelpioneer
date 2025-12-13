@@ -1,4 +1,12 @@
 import type { Metadata } from "next";
+import { VT323 } from "next/font/google";
+
+const vt323 = VT323({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-vt323",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Projektformulär – PixelPioneer",
@@ -12,5 +20,5 @@ export default function BriefLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <div className={vt323.variable}>{children}</div>;
 }
