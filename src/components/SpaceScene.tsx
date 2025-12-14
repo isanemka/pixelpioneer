@@ -187,15 +187,16 @@ export default function SpaceScene() {
   useEffect(() => {
     createStars();
 
+    // Use Framer Motion's useReducedMotion hook consistently
+    const scene = sceneRef.current;
     if (!prefersReducedMotion) {
       createAsteroid();
-    }
-
-    const scene = sceneRef.current;
-    if (scene) {
-      scene.addEventListener("mousemove", createMouseTrail);
-      scene.addEventListener("mousemove", updateMouseGlow);
-      scene.addEventListener("mouseleave", hideMouseGlow);
+      
+      if (scene) {
+        scene.addEventListener("mousemove", createMouseTrail);
+        scene.addEventListener("mousemove", updateMouseGlow);
+        scene.addEventListener("mouseleave", hideMouseGlow);
+      }
     }
 
     const debouncedCreateStars = debounce(createStars, 200);
@@ -209,7 +210,7 @@ export default function SpaceScene() {
         clearTimeout(asteroidTimeoutRef.current);
       }
 
-      if (scene) {
+      if (scene && !prefersReducedMotion) {
         scene.removeEventListener("mousemove", createMouseTrail);
         scene.removeEventListener("mousemove", updateMouseGlow);
         scene.removeEventListener("mouseleave", hideMouseGlow);
@@ -223,7 +224,7 @@ export default function SpaceScene() {
 
       window.removeEventListener("resize", debouncedCreateStars);
     };
-  }, [createStars, createAsteroid, createMouseTrail, updateMouseGlow, hideMouseGlow]);
+  }, [createStars, createAsteroid, createMouseTrail, updateMouseGlow, hideMouseGlow, prefersReducedMotion]);
 
   return (
     <div className="space-scene" ref={sceneRef}>

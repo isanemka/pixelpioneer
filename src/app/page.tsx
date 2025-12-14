@@ -8,6 +8,9 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
+
+// Define type for cubic bezier easing arrays
+type CubicBezier = [number, number, number, number];
 import {
   Target,
   Hammer,
@@ -16,9 +19,12 @@ import {
   Settings,
   Palette,
   Smartphone,
+  BotMessageSquare,
   BarChart3,
+  CalendarClock,
   Globe,
   Zap,
+  Droplets,
   Mail,
   Briefcase,
 } from "lucide-react";
@@ -65,6 +71,7 @@ const Navigation = () => {
               PixelPioneer
             </span>
           </motion.a>
+          {/* TODO: Add mobile hamburger menu for small screens (currently navigation is hidden on mobile) */}
           <motion.ul
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -140,7 +147,7 @@ const Hero = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any as any },
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as CubicBezier },
     },
   };
 
@@ -149,7 +156,7 @@ const Hero = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] as any as any },
+      transition: { duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] as CubicBezier },
     },
   };
 
@@ -198,7 +205,7 @@ const Hero = () => {
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
+            transition={{ delay: 1, duration: 0.8, ease: [0.16, 1, 0.3, 1] as CubicBezier }}
             className="text-[#C026D3]"
             style={{ fontFamily: 'Delta Block, sans-serif' }}
           >
@@ -258,7 +265,7 @@ const BrandExplosion = () => {
               rotate: [0, 360, 720]
             } : {}}
             transition={{ 
-              x: { duration: 1, ease: [0.16, 1, 0.3, 1] as any },
+              x: { duration: 1, ease: [0.16, 1, 0.3, 1] as CubicBezier },
               opacity: { duration: 0.3, ease: "easeIn" },
               rotate: { duration: 1, ease: "linear" }
             }}
@@ -281,7 +288,7 @@ const BrandExplosion = () => {
               rotate: [0, -360, -720]
             } : {}}
             transition={{ 
-              x: { duration: 1, ease: [0.16, 1, 0.3, 1] as any },
+              x: { duration: 1, ease: [0.16, 1, 0.3, 1] as CubicBezier },
               opacity: { duration: 0.3, ease: "easeIn" },
               rotate: { duration: 1, ease: "linear" }
             }}
@@ -328,7 +335,7 @@ const BrandExplosion = () => {
             }}
             transition={{
               duration: 1.5,
-              ease: [0.16, 1, 0.3, 1] as any,
+              ease: [0.16, 1, 0.3, 1] as CubicBezier,
             }}
           />
         );
@@ -338,7 +345,7 @@ const BrandExplosion = () => {
       <motion.div
         initial={{ opacity: 0, scale: 0 }}
         animate={animationPhase >= 2 ? { opacity: 1, scale: 1 } : {}}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as CubicBezier }}
         className="relative z-10 text-center"
       >
         <motion.img
@@ -347,7 +354,7 @@ const BrandExplosion = () => {
           className="w-64 md:w-96 mx-auto"
           initial={{ rotate: -90, opacity: 0, scale: 0.3 }}
           animate={animationPhase >= 2 ? { rotate: 0, opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as CubicBezier }}
           style={{
             filter: 'drop-shadow(0 0 30px rgba(79, 1, 164, 0.6))'
           }}
@@ -372,7 +379,7 @@ const Journey = () => {
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as any },
+      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as CubicBezier },
     },
   };
 
@@ -385,17 +392,17 @@ const Journey = () => {
     {
       Icon: Hammer,
       title: "Utveckling",
-      desc: "Jag bygger allt från visuella hemsidor till komplexa SaaS-plattformar. Fokus på användarvänlighet och att det ska vara lätt för dig att hantera.",
+      desc: "Jag bygger allt från visuella hemsidor till komplexa SaaS-plattformar.",
     },
     {
       Icon: Rocket,
       title: "Lansering",
-      desc: "När allt är klart lanserar jag din nya webbplats och säkerställer att allt fungerar perfekt.",
+      desc: "När allt är klart lanserar jag din nya plattform och säkerställer att allt fungerar perfekt.",
     },
     {
       Icon: TrendingUp,
       title: "Tillväxt",
-      desc: "Jag finns kvar som stöd när du växer. Uppdateringar, förbättringar och nya funktioner när du behöver det.",
+      desc: "Jag finns kvar som stöd när resan fortsätter. Uppdateringar, förbättringar och nya funktioner när du behöver det.",
     },
   ];
 
@@ -480,7 +487,7 @@ const Journey = () => {
                     }}
                     transition={{
                       duration: 0.8,
-                      ease: [0.16, 1, 0.3, 1] as any,
+                      ease: [0.16, 1, 0.3, 1] as CubicBezier,
                     }}
                   />
                 );
@@ -519,7 +526,7 @@ const Services = () => {
     { Icon: BarChart3, title: "SaaS-plattformar", tech: "Avancerade verktyg och system" },
     { Icon: Smartphone, title: "Mobilvänligt", tech: "Fungerar perfekt på alla enheter" },
     { Icon: Settings, title: "Serviceavtal", tech: "Jag tar hand om allt åt dig även efter lansering" },
-    { Icon: Palette, title: "Design", tech: "Professionell design som stäcker ut" },
+    { Icon: Palette, title: "Design", tech: "Professionell design med den seaste tekniken" },
     { Icon: Zap, title: "Prestanda", tech: "Blixtsnabba laddningstider" },
   ];
 
@@ -534,7 +541,7 @@ const Services = () => {
       opacity: 1,
       scale: 1,
       y: 0,
-      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as any },
+      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as CubicBezier },
     },
   };
 
@@ -554,7 +561,7 @@ const Services = () => {
             Vad jag erbjuder
           </h2>
           <p className="text-lg sm:text-xl md:text-2xl text-gray-400 mb-8 sm:mb-12">
-            Allt du behöver för en framgångsrik webbplats.
+            Allt du behöver för en digital resa.
           </p>
         </motion.div>
 
@@ -611,24 +618,24 @@ const Projects = () => {
 
   const projects = [
     {
-      Icon: Zap,
-      title: "Rutputs.nu",
-      desc: "Professionell webbplats för fönsterputsföretag med bokningssystem.",
-      details: "En komplett webbplats som visar upp företagets tjänster och gör det enkelt för kunder att boka direkt online. Sidan är snabb, mobilvänlig och enkel att uppdatera.",
+      Icon: Droplets,
+      title: "Rutputs",
+      desc: "Webbplats för ett fönsterputsföretag med en smart prislista.",
+      details: "En komplett webbplats som visar upp företagets tjänster och gör det enkelt för kunder att få fram rätt pris direkt.",
       link: "https://rutputs.nu"
     },
     {
-      Icon: BarChart3,
-      title: "Planeramera.se",
-      desc: "Digital plattform för prenumerationer och företagsadministration.",
-      details: "En komplett lösning där företag kan hantera sina prenumerationer, kunder och betalningar på ett ställe. Allt från inloggning till betalning är automatiserat.",
+      Icon: CalendarClock,
+      title: "Planera Mera",
+      desc: "Planeringsverktyg för återkommande uppgifter samlat i ett intuitivt årshjul.",
+      details: "En komplett lösning där administratörer kan hantera återkommande uppgifter, planera året och få påminnelser när deadlines närmar sig.",
       link: "https://planeramera.se"
     },
     {
-      Icon: Smartphone,
-      title: "AI-coach",
-      desc: "Digital coach som ingår i ett utbildningskoncept.",
-      details: "En AI-driven coach som hjälper deltagare genom utbildningen. Går att prata med när som helst för att få stöd och vägledning längs vägen.",
+      Icon: BotMessageSquare,
+      title: "NYFIKEN-coach",
+      desc: "AI coach som ingår i ett utbildningskoncept för NYFIKEN-modellen.",
+      details: "En AI-driven coach som hjälper deltagare efter utbildningen. Coachen ger råd och insikter baserat på NYFIKEN-modellens principer.",
       link: "https://www.nyfikenmodellen.se"
     },
   ];
@@ -643,7 +650,7 @@ const Projects = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as any },
+      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as CubicBezier },
     },
   };
 
