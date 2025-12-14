@@ -13,18 +13,14 @@ import {
   Hammer,
   Rocket,
   TrendingUp,
-  Monitor,
   Settings,
   Palette,
   Smartphone,
-  Wrench,
   BarChart3,
   Globe,
-  Lock,
   Zap,
   Mail,
   Briefcase,
-  Github,
 } from "lucide-react";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/CookieBanner";
