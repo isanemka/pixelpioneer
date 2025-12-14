@@ -236,16 +236,37 @@ const BrandExplosion = () => {
   const ref = useRef<HTMLElement | null>(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
   const [animationPhase, setAnimationPhase] = React.useState(0);
+  const [triggerAnimation, setTriggerAnimation] = React.useState(0);
 
   React.useEffect(() => {
-    if (isInView) {
-      // Phase 1: P's fly in (happens automatically with isInView)
+    let timeout1: ReturnType<typeof setTimeout> | undefined;
+    let timeout2: ReturnType<typeof setTimeout> | undefined;
+    
+    if (isInView || triggerAnimation > 0) {
+      setAnimationPhase(0);
+      // Phase 1: P's fly in (happens automatically with phase 0)
       // Phase 2: Explosion starts
-      setTimeout(() => setAnimationPhase(1), 1000);
+      timeout1 = setTimeout(() => setAnimationPhase(1), 1000);
       // Phase 3: Logo reveals
-      setTimeout(() => setAnimationPhase(2), 1100);
+      timeout2 = setTimeout(() => setAnimationPhase(2), 1100);
     }
-  }, [isInView]);
+    
+    return () => {
+      if (timeout1) clearTimeout(timeout1);
+      if (timeout2) clearTimeout(timeout2);
+    };
+  }, [isInView, triggerAnimation]);
+
+  const handleLogoClick = () => {
+    setTriggerAnimation(prev => prev + 1);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleLogoClick();
+    }
+  };
 
   return (
     <section
@@ -352,9 +373,16 @@ const BrandExplosion = () => {
         <motion.img
           src="/images/logo_horizon.png"
           alt="PixelPioneer Logo"
-          className="w-64 md:w-96 mx-auto"
+          onClick={handleLogoClick}
+          onKeyDown={handleKeyDown}
+          tabIndex={0}
+          role="button"
+          aria-label="Klicka för att återupprepa animationen"
+          className="w-64 md:w-96 mx-auto cursor-pointer"
           initial={{ rotate: -90, opacity: 0, scale: 0.3 }}
           animate={animationPhase >= 2 ? { rotate: 0, opacity: 1, scale: 1 } : {}}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as CubicBezier }}
           style={{
             filter: 'drop-shadow(0 0 30px rgba(79, 1, 164, 0.6))'
