@@ -253,6 +253,7 @@ const BrandExplosion = () => {
       className="min-h-screen flex items-center justify-center bg-slate-900 relative overflow-hidden py-20"
     >
       {/* Animated P's from sides */}
+      {/* TODO: Convert <img> tags to next/image <Image> component for automatic optimization, lazy loading, and responsive images */}
       {animationPhase < 1 && (
         <>
           <motion.img
