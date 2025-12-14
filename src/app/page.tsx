@@ -526,7 +526,7 @@ const Services = () => {
     { Icon: BarChart3, title: "SaaS-plattformar", tech: "Avancerade verktyg och system" },
     { Icon: Smartphone, title: "Mobilvänligt", tech: "Fungerar perfekt på alla enheter" },
     { Icon: Settings, title: "Serviceavtal", tech: "Jag tar hand om allt åt dig även efter lansering" },
-    { Icon: Palette, title: "Design", tech: "Professionell design med den seaste tekniken" },
+    { Icon: Palette, title: "Design", tech: "Professionell design med den senaste tekniken" },
     { Icon: Zap, title: "Prestanda", tech: "Blixtsnabba laddningstider" },
   ];
 
