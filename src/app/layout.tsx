@@ -18,7 +18,7 @@ const vt323 = VT323({
 });
 
 export const metadata: Metadata = {
-  title: "PixelPioneer – Webbutveckling för småföretag",
+  title: "PixelPioneer – Från pixel till plattform",
   description:
     "PixelPioneer hjälper småföretag att växa online med snabba, säkra och affärsdrivande webblösningar. Boka kostnadsfri konsultation.",
   keywords: ["webbutveckling", "hemsida", "småföretag", "SEO", "webbdesign"],
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   robots: "index,follow",
   openGraph: {
     type: "website",
-    title: "PixelPioneer – Webbutveckling för småföretag",
+    title: "PixelPioneer – Från pixel till plattform",
     description:
       "Snabba, säkra och affärsdrivande webblösningar som ger fler kunder. Kostnadsfri konsultation.",
     images: ["/images/PixelAssistant.png"],
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PixelPioneer – Webbutveckling för småföretag",
+    title: "PixelPioneer – Från pixel till plattform",
     description:
       "Snabba, säkra och affärsdrivande webblösningar som ger fler kunder.",
     images: ["/images/PixelAssistant.png"],

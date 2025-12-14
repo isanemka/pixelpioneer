@@ -272,7 +272,7 @@ Skickat via pixelpioneer.se/brief
           <tr>
             <td style="text-align: center; padding-top: 30px;">
               <p style="font-family: Arial, Helvetica, sans-serif; color: #888888; font-size: 14px; margin: 0;">
-                © ${new Date().getFullYear()} PixelPioneer • Webbsidor som gör skillnad
+                © ${new Date().getFullYear()} PixelPioneer • Från pixel till plattform
               </p>
               <p style="font-family: Arial, Helvetica, sans-serif; color: #888888; font-size: 14px; margin: 10px 0 0 0;">
                 <a href="https://pixelpioneer.se" style="color: #32CD32; text-decoration: none;">pixelpioneer.se</a>

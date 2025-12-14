@@ -7,7 +7,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative bg-gradient-to-b from-gray-900 via-black to-gray-900 text-white py-16 font-vt323 overflow-hidden"
+      className="relative bg-gradient-to-b from-gray-900 via-black to-gray-900 text-white py-16 font-vt323 overflow-hidden scroll-mt-24"
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-10">

@@ -190,7 +190,7 @@ export default function Approach() {
   return (
     <section
       id="approach"
-      className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white py-16 font-vt323 overflow-hidden"
+      className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white py-16 font-vt323 overflow-hidden scroll-mt-24"
     >
       <div className="container mx-auto relative z-10">
         {/* HEADLINE */}

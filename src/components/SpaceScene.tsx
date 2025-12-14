@@ -1,6 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useCallback } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 
 export default function SpaceScene() {
   const mouseTrailRef = useRef<HTMLDivElement>(null);
@@ -11,6 +18,17 @@ export default function SpaceScene() {
   const trailElementsRef = useRef<HTMLElement[]>([]);
   const asteroidTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isSpawningAsteroidRef = useRef(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  // Scroll progress for the hero itself (0 at top, 1 when hero has scrolled past).
+  // Used to gently fade/translate the HUD as the journey begins.
+  const { scrollYProgress } = useScroll({
+    target: sceneRef,
+    offset: ["start start", "end start"],
+  });
+  const hudOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const hudY = useTransform(scrollYProgress, [0, 0.6], [0, -24]);
+  const gridOpacity = useTransform(scrollYProgress, [0, 1], [0.9, 0.2]);
 
   // Debounce utility
   const debounce = <T extends (...args: unknown[]) => void>(fn: T, delay = 200) => {
@@ -24,7 +42,7 @@ export default function SpaceScene() {
   // Mouse trail effect
   const createMouseTrail = useCallback((e: MouseEvent) => {
     const target = e.target as HTMLElement;
-    if (target?.closest(".title-container")) return;
+    if (target?.closest(".hero-hud")) return;
 
     const trail = document.createElement("div");
     trail.className = "trail-particle";
@@ -167,21 +185,18 @@ export default function SpaceScene() {
   }, []);
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
     createStars();
 
+    // Use Framer Motion's useReducedMotion hook consistently
+    const scene = sceneRef.current;
     if (!prefersReducedMotion) {
       createAsteroid();
-    }
-
-    const scene = sceneRef.current;
-    if (scene) {
-      scene.addEventListener("mousemove", createMouseTrail);
-      scene.addEventListener("mousemove", updateMouseGlow);
-      scene.addEventListener("mouseleave", hideMouseGlow);
+      
+      if (scene) {
+        scene.addEventListener("mousemove", createMouseTrail);
+        scene.addEventListener("mousemove", updateMouseGlow);
+        scene.addEventListener("mouseleave", hideMouseGlow);
+      }
     }
 
     const debouncedCreateStars = debounce(createStars, 200);
@@ -195,7 +210,7 @@ export default function SpaceScene() {
         clearTimeout(asteroidTimeoutRef.current);
       }
 
-      if (scene) {
+      if (scene && !prefersReducedMotion) {
         scene.removeEventListener("mousemove", createMouseTrail);
         scene.removeEventListener("mousemove", updateMouseGlow);
         scene.removeEventListener("mouseleave", hideMouseGlow);
@@ -209,19 +224,55 @@ export default function SpaceScene() {
 
       window.removeEventListener("resize", debouncedCreateStars);
     };
-  }, [createStars, createAsteroid, createMouseTrail, updateMouseGlow, hideMouseGlow]);
+  }, [createStars, createAsteroid, createMouseTrail, updateMouseGlow, hideMouseGlow, prefersReducedMotion]);
 
   return (
     <div className="space-scene" ref={sceneRef}>
-      <div className="title-container">
-        <h1 className="title text-white font-press-start-2p">
-          Pixel
-          <br />
-          Pioneer
-        </h1>
-      </div>
+      <motion.div
+        className="absolute inset-0 hero-grid"
+        aria-hidden="true"
+        style={prefersReducedMotion ? undefined : { opacity: gridOpacity }}
+      />
+      <div className="absolute inset-0 hero-scanlines" aria-hidden="true" />
+
+      <motion.div
+        className="hero-hud"
+        style={
+          prefersReducedMotion
+            ? undefined
+            : {
+                opacity: hudOpacity,
+                y: hudY,
+              }
+        }
+      >
+        <p className="hero-badge">
+          <span className="select-none">◼</span>
+          From pixel to platform
+        </p>
+
+        <h1 className="hero-title text-white font-press-start-2p">PixelPioneer</h1>
+        <p className="hero-subtitle">
+          Experimental web agency & product developer — pixel aesthetics, modern
+          execution.
+        </p>
+
+        <div className="hero-actions">
+          <Link href="/brief" className="hero-btn hero-btn-primary">
+            Starta ett projekt
+          </Link>
+          <a href="#services" className="hero-btn hero-btn-secondary">
+            Utforska resan
+          </a>
+        </div>
+
+        <p className="hero-scroll-hint">
+          Scrolla för att börja <span className="hero-scroll-arrow">↓</span>
+        </p>
+      </motion.div>
+
       <div className="stars" ref={starsContainerRef}></div>
-      <div className="rocket"></div>
+      <div className="rocket" aria-hidden="true"></div>
       <div className="mouse-trail" ref={mouseTrailRef}></div>
       <div className="mouse-glow" ref={mouseGlowRef}></div>
       <div className="custom-cursor" ref={customCursorRef}>

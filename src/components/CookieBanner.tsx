@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { Cookie } from "lucide-react";
 
 export default function CookieBanner() {
   const [showBanner, setShowBanner] = useState<boolean | null>(null);
@@ -36,33 +37,37 @@ export default function CookieBanner() {
 
   return (
     <div
-      className="z-20 fixed bottom-0 left-0 w-full bg-[#1a1a2e] border-t-2 border-[#00ff88] text-white p-4 flex flex-col md:flex-row justify-between items-center gap-4"
+      className="z-20 fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-sm border-t-2 border-[#4F01A4] text-white p-4 flex flex-col md:flex-row justify-between items-center gap-4 shadow-lg shadow-[#4F01A4]/20"
       role="dialog"
       aria-label="Cookie consent"
       aria-live="polite"
     >
-      <p className="font-vt323 text-lg text-gray-300 text-center md:text-left">
-        🍪 Vi använder anonym statistik för att förbättra sidan. Ingen personlig
-        data sparas.{" "}
+      <p className="text-base sm:text-lg text-gray-300 text-center md:text-left flex flex-col sm:flex-row items-center justify-center md:justify-start gap-2" style={{ fontFamily: 'VT323, monospace' }}>
+        <span className="flex items-center gap-2">
+          <Cookie className="w-5 h-5 sm:w-6 sm:h-6 text-[#C026D3] flex-shrink-0" />
+          Vi använder anonym statistik för att förbättra sidan.
+        </span>
         <Link
-          href="/integritetspolicy"
-          className="text-[#00ff88] hover:underline"
+          href="/privacy-policy"
+          className="text-[#C026D3] hover:underline whitespace-nowrap"
         >
           Läs mer
         </Link>
       </p>
-      <div className="flex gap-3">
+      <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
         <button
           type="button"
           onClick={declineCookies}
-          className="font-vt323 text-lg px-4 py-2 border-2 border-gray-500 text-gray-300 hover:border-[#00ff88] hover:text-[#00ff88] transition-colors cursor-pointer"
+          className="text-base sm:text-lg px-3 sm:px-4 py-2 border-2 border-gray-500 text-gray-300 hover:border-[#C026D3] hover:text-[#C026D3] transition-colors cursor-pointer flex-1 sm:flex-initial"
+          style={{ fontFamily: 'VT323, monospace' }}
         >
           Avböj
         </button>
         <button
           type="button"
           onClick={acceptCookies}
-          className="font-vt323 text-lg px-4 py-2 bg-[#00ff88] text-[#1a1a2e] hover:bg-[#00cc6a] transition-colors cursor-pointer"
+          className="text-base sm:text-lg px-3 sm:px-4 py-2 bg-gradient-to-r from-[#4F01A4] to-[#7B2FD1] text-white hover:opacity-90 transition-opacity cursor-pointer flex-1 sm:flex-initial"
+          style={{ fontFamily: 'VT323, monospace' }}
         >
           Godkänn
         </button>
