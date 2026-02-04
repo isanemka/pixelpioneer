@@ -661,11 +661,19 @@ const Projects = () => {
       link: "https://planeramera.se"
     },
     {
+      Icon: Hammer,
+      title: "Utveda Bygg & Anläggning AB",
+      desc: "Webbplats för företag inom bygg och anläggning med fokus på tjänster på olika orter.",
+      details: "En tydlig och modern företagswebbplats som lyfter fram tjänster, referenser och gör det enkelt att ta kontakt.",
+      link: "https://www.utvedabygg.se"
+    },
+    {
       Icon: BotMessageSquare,
       title: "NYFIKEN-coach",
       desc: "AI coach som ingår i ett utbildningskoncept för NYFIKEN-modellen.",
       details: "En AI-driven coach som hjälper deltagare efter utbildningen. Coachen ger råd och insikter baserat på NYFIKEN-modellens principer.",
-      link: "https://www.nyfikenmodellen.se"
+      link: "https://www.nyfikenmodellen.se",
+      hidden: true
     },
   ];
 
@@ -709,7 +717,7 @@ const Projects = () => {
           animate={isInView ? "visible" : "hidden"}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {projects.map((project, i) => (
+          {projects.filter((project) => !project.hidden).map((project, i) => (
             <div key={i} className="h-[400px] flex items-center">
               <motion.div
                 variants={cardVariants}
